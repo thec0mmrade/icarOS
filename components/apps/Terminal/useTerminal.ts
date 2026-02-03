@@ -7,7 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { PROMPT_CHARACTER, config } from "components/apps/Terminal/config";
+import {
+  PROMPT_CHARACTER,
+  TERMINAL_HOST,
+  TERMINAL_USER,
+  config,
+} from "components/apps/Terminal/config";
 import {
   autoComplete,
   readClipboardToTerminal,
@@ -35,6 +40,11 @@ import {
 const { alias, author, license } = PACKAGE_DATA;
 
 export const displayLicense = `${license} License`;
+
+const formatPrompt = (path: string): string => {
+  const displayPath = path === HOME ? "~" : path.replace(HOME, "~");
+  return `${TERMINAL_USER}@${TERMINAL_HOST}:${displayPath}${PROMPT_CHARACTER}`;
+};
 
 const useTerminal = ({
   containerRef,
@@ -153,7 +163,7 @@ const useTerminal = ({
     if (localEcho && terminal && !prompted) {
       const prompt = (): Promise<void> =>
         localEcho
-          .read(`\r\n${cd.current}${PROMPT_CHARACTER}`)
+          .read(`\r\n${formatPrompt(cd.current)}`)
           .then((command) => processCommand.current?.(command).then(prompt));
 
       localEcho.println(`${alias} [Version ${displayVersion()}]`);
@@ -161,7 +171,7 @@ const useTerminal = ({
 
       if (initialCommand) {
         localEcho.println(
-          `\r\n${cd.current}${PROMPT_CHARACTER}${initialCommand}\r\n`
+          `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
         );
         localEcho.history.entries = [initialCommand];
         processCommand.current(initialCommand).then(prompt);
