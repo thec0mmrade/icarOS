@@ -170,9 +170,14 @@ export const getShortcutInfo = (
         InternetShortcut: InternetShortcut;
       });
 
+  // Normalize icon path for BASE_PATH support
+  const normalizedIcon = icon.startsWith("/System/Icons/")
+    ? icon.replace("/System/Icons/", `${ICON_PATH}/`)
+    : icon;
+
   return {
     comment,
-    icon,
+    icon: normalizedIcon,
     pid,
     type,
     url,
