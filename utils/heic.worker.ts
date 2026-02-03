@@ -1,3 +1,5 @@
+import { SYSTEM_PATH } from "utils/constants";
+
 type LibHeif = {
   libheif: () => {
     HeifDecoder: new () => {
@@ -16,7 +18,7 @@ type LibHeif = {
 globalThis.addEventListener(
   "message",
   ({ data: image }: { data: Buffer }) => {
-    globalThis.importScripts("/System/libheif/libheif-bundle.js");
+    globalThis.importScripts(`${SYSTEM_PATH}/libheif/libheif-bundle.js`);
 
     const { libheif } = globalThis as unknown as typeof globalThis & LibHeif;
     const { HeifDecoder } = libheif();

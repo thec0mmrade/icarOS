@@ -1,4 +1,5 @@
 import type * as XLSX from "xlsx";
+import { SYSTEM_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 declare global {
@@ -10,7 +11,7 @@ declare global {
 
 const getSheetJs = async (): Promise<typeof XLSX> => {
   if (!window.XLSX) {
-    await loadFiles(["/System/SheetJS/xlsx.full.min.js"]);
+    await loadFiles([`${SYSTEM_PATH}/SheetJS/xlsx.full.min.js`]);
   }
 
   return window.XLSX;
@@ -24,7 +25,7 @@ export const convertSheet = async (
   let numbers: string | undefined;
 
   if (extension === "numbers") {
-    await loadFiles(["/System/SheetJS/xlsx.zahl.js"]);
+    await loadFiles([`${SYSTEM_PATH}/SheetJS/xlsx.zahl.js`]);
 
     if (!window.XLSX_ZAHL_PAYLOAD) return Buffer.from("");
 

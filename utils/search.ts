@@ -7,14 +7,16 @@ import { useFileSystem } from "contexts/fileSystem";
 import { type RootFileSystem } from "contexts/fileSystem/useAsyncFs";
 import SEARCH_EXTENSIONS from "scripts/searchExtensions.json";
 import {
+  BASE_PATH,
   DISBALE_AUTO_INPUT_FEATURES,
   HIGH_PRIORITY_REQUEST,
+  SYSTEM_PATH,
 } from "utils/constants";
 import { getExtension, loadFiles } from "utils/functions";
 
-export const FILE_INDEX = "/.index/search.lunr.json";
+export const FILE_INDEX = `${BASE_PATH}/.index/search.lunr.json`;
 
-export const SEARCH_LIB = "/System/lunr/lunr.min.js";
+export const SEARCH_LIB = `${SYSTEM_PATH}/lunr/lunr.min.js`;
 
 export const SEARCH_INPUT_PROPS = {
   "aria-label": "Search",

@@ -4,11 +4,12 @@ import {
   disableControls,
 } from "components/system/Desktop/Wallpapers/vantaWaves/config";
 import { type VantaWavesConfig } from "components/system/Desktop/Wallpapers/vantaWaves/types";
+import { SYSTEM_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 export const libs = [
-  "/System/Vanta.js/three.min.js",
-  "/System/Vanta.js/vanta.waves.min.js",
+  `${SYSTEM_PATH}/Vanta.js/three.min.js`,
+  `${SYSTEM_PATH}/Vanta.js/vanta.waves.min.js`,
 ];
 
 const vantaWaves = (

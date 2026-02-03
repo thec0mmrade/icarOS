@@ -1,4 +1,5 @@
 import { basename, dirname, extname, join } from "path";
+import { SYSTEM_PATH } from "utils/constants";
 import { blobToBuffer, loadFiles } from "utils/functions";
 import { type ImageMagickConvertFile } from "utils/imagemagick/types";
 
@@ -10,7 +11,7 @@ export const convert = async (
   const returnFiles: ImageMagickConvertFile[] = [];
 
   await loadFiles(
-    ["/System/imagemagick/wasm-imagemagick.umd-es5.min.js"],
+    [`${SYSTEM_PATH}/imagemagick/wasm-imagemagick.umd-es5.min.js`],
     false,
     true
   );

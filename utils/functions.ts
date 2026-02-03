@@ -24,6 +24,7 @@ import {
   PREVENT_SCROLL,
   SHORTCUT_EXTENSION,
   SUPPORTED_ICON_SIZES,
+  SYSTEM_PATH,
   TASKBAR_HEIGHT,
   TIMESTAMP_DATE_FORMAT,
   USER_ICON_PATH,
@@ -364,7 +365,7 @@ export const loadFiles = async (
 export const getHtmlToImage = async (): Promise<
   typeof HtmlToImage | undefined
 > => {
-  await loadFiles(["/System/html-to-image/html-to-image.js"]);
+  await loadFiles([`${SYSTEM_PATH}/html-to-image/html-to-image.js`]);
 
   const { htmlToImage } = window as unknown as Window & {
     htmlToImage: typeof HtmlToImage;

@@ -1,3 +1,4 @@
+import { SYSTEM_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 declare global {
@@ -7,7 +8,7 @@ declare global {
   }
 }
 
-export const ROOT_PATH = "/System/Hexells";
+export const ROOT_PATH = `${SYSTEM_PATH}/Hexells`;
 
 export const libs = [
   `${ROOT_PATH}/twgl.min.js`,

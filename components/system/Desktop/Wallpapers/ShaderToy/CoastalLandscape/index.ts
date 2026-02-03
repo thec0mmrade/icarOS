@@ -1,3 +1,4 @@
+import { SYSTEM_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 declare global {
@@ -7,9 +8,9 @@ declare global {
 }
 
 export const libs = [
-  "/System/ShaderToy/CoastalLandscape/piLibs.js",
-  "/System/ShaderToy/CoastalLandscape/effect.js",
-  "/System/ShaderToy/CoastalLandscape/init.js",
+  `${SYSTEM_PATH}/ShaderToy/CoastalLandscape/piLibs.js`,
+  `${SYSTEM_PATH}/ShaderToy/CoastalLandscape/effect.js`,
+  `${SYSTEM_PATH}/ShaderToy/CoastalLandscape/init.js`,
 ];
 
 const CoastalLandscape = async (el?: HTMLElement | null): Promise<void> => {

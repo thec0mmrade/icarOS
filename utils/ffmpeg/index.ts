@@ -1,5 +1,6 @@
 import { basename, dirname, extname, join } from "path";
 import { type FFmpeg } from "@ffmpeg/ffmpeg";
+import { SYSTEM_PATH } from "utils/constants";
 import { type FFmpegTranscodeFile } from "utils/ffmpeg/types";
 import { fetchBlob } from "utils/functions";
 
@@ -13,10 +14,10 @@ export const getFFmpeg = async (
 
   await ffmpeg.load({
     coreURL: URL.createObjectURL(
-      await fetchBlob("/System/ffmpeg/ffmpeg-core.js")
+      await fetchBlob(`${SYSTEM_PATH}/ffmpeg/ffmpeg-core.js`)
     ),
     wasmURL: URL.createObjectURL(
-      await fetchBlob("/System/ffmpeg/ffmpeg-core.wasm")
+      await fetchBlob(`${SYSTEM_PATH}/ffmpeg/ffmpeg-core.wasm`)
     ),
   });
 

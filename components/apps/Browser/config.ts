@@ -1,5 +1,9 @@
 import { type ProxyState } from "components/apps/Browser/useProxyMenu";
-import { FAVICON_BASE_PATH } from "utils/constants";
+import {
+  FAVICON_BASE_PATH,
+  ICON_PATH,
+  PROGRAM_FILES_PATH,
+} from "utils/constants";
 
 type Bookmark = {
   icon: string;
@@ -13,9 +17,9 @@ type WaybackUrlInfo = {
 };
 
 export const DINO_GAME = {
-  icon: "/System/Icons/Favicons/dino.webp",
+  icon: `${ICON_PATH}/Favicons/dino.webp`,
   name: "T-Rex Chrome Dino Game",
-  path: "/Program Files/Browser/dino/index.html",
+  path: `${PROGRAM_FILES_PATH}/Browser/dino/index.html`,
   url: "chrome://dino",
 };
 
@@ -26,33 +30,33 @@ export const bookmarks: Bookmark[] = [
     url: "https://dustinbrett.com/",
   },
   {
-    icon: "/System/Icons/Favicons/dir.webp",
+    icon: `${ICON_PATH}/Favicons/dir.webp`,
     name: "Index of /",
     url: "http://localhost/",
   },
   DINO_GAME,
   {
-    icon: "/System/Icons/Favicons/google.webp",
+    icon: `${ICON_PATH}/Favicons/google.webp`,
     name: "Google",
     url: "https://www.google.com/webhp?igu=1",
   },
   {
-    icon: "/System/Icons/Favicons/wikipedia.webp",
+    icon: `${ICON_PATH}/Favicons/wikipedia.webp`,
     name: "Wikipedia",
     url: "https://www.wikipedia.org/",
   },
   {
-    icon: "/System/Icons/Favicons/archive.webp",
+    icon: `${ICON_PATH}/Favicons/archive.webp`,
     name: "Internet Archive",
     url: "https://archive.org/",
   },
   {
-    icon: "/System/Icons/webamp.webp",
+    icon: `${ICON_PATH}/webamp.webp`,
     name: "Winamp Skin Museum",
     url: "https://skins.webamp.org/",
   },
   {
-    icon: "/System/Icons/Favicons/aos.webp",
+    icon: `${ICON_PATH}/Favicons/aos.webp`,
     name: "AaronOS",
     url: "https://aaronos.dev/",
   },

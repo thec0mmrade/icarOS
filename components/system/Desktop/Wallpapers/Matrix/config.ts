@@ -1,3 +1,4 @@
+import { SYSTEM_PATH } from "utils/constants";
 import { viewWidth } from "utils/functions";
 
 const config = {
@@ -24,7 +25,7 @@ const config = {
   glintContrast: 2.5,
   glyphEdgeCrop: 0,
   glyphHeightToWidth: 1,
-  glyphMSDFURL: "/System/Matrix/assets/matrixcode_msdf.png",
+  glyphMSDFURL: `${SYSTEM_PATH}/Matrix/assets/matrixcode_msdf.png`,
   glyphSequenceLength: 57,
   glyphTextureGridSize: [8, 8],
   glyphVerticalSpacing: 1,
