@@ -56,8 +56,13 @@ const ResultEntry: FC<ResultEntryProps> = ({
     let text = baseName;
 
     try {
+      const escapedTerm = searchTerm.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        String.raw`\$&`
+      );
+
       text = text.replace(
-        new RegExp(`(${searchTerm})`, "i"),
+        new RegExp(`(${escapedTerm})`, "i"),
         "<span>$1</span>"
       );
     } catch {

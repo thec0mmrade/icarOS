@@ -627,7 +627,11 @@ export const getInfoWithExtension = (
             // eslint-disable-next-line deprecation/deprecation
             containerElement.style.webkitUserSelect = "none";
 
-            containerElement.innerHTML = contents.toString();
+            const { default: DOMPurify } = await import("dompurify");
+
+            containerElement.innerHTML = DOMPurify.sanitize(
+              contents.toString()
+            );
 
             document.body.append(containerElement);
 

@@ -41,6 +41,14 @@ const nextConfig = {
           key: "Cross-Origin-Embedder-Policy",
           value: "credentialless",
         },
+        {
+          key: "X-Content-Type-Options",
+          value: "nosniff",
+        },
+        {
+          key: "X-Frame-Options",
+          value: "SAMEORIGIN",
+        },
       ],
     },
   ],
