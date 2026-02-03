@@ -32,6 +32,8 @@ yarn stylelint               # Check styled-components CSS
 yarn unused-exports          # Find unused exports
 ```
 
+**Note:** On Node.js 17+, `yarn install` may require `NODE_OPTIONS='--openssl-legacy-provider'` due to browserfs dependency build. The main build/dev commands work without it.
+
 ## Architecture Quick Reference
 
 ### Context Factory Pattern
