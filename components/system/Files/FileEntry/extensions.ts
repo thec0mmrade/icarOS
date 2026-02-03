@@ -11,7 +11,7 @@ type Extension = {
 const types = {
   Application: {
     icon: "executable",
-    process: ["BoxedWine", "JSDOS"],
+    process: ["BoxedWine"],
     type: "Application",
   },
   AudioPlaylist: {
@@ -45,11 +45,6 @@ const types = {
   HtmlDocument: {
     process: ["Browser", ...TEXT_EDITORS],
     type: "HTML Document",
-  },
-  JsdosBundle: {
-    icon: "jsdos",
-    process: ["JSDOS", "FileExplorer"],
-    type: "JSDOS Bundle",
   },
   Markdown: {
     icon: "marked",
@@ -114,7 +109,7 @@ const types = {
   },
   ZipFile: {
     icon: "compressed",
-    process: ["FileExplorer", "BoxedWine", "JSDOS"],
+    process: ["FileExplorer", "BoxedWine"],
     type: "Compressed (zipped) Folder",
   },
 };
@@ -128,7 +123,6 @@ const extensions: Record<string, Extension> = {
   ".html": types.HtmlDocument,
   ".img": types.DiscImage,
   ".iso": types.MountableDiscImage,
-  ".jsdos": types.JsdosBundle,
   ".m3u": types.AudioPlaylist,
   ".m3u8": types.MediaPlaylist,
   ".md": types.Markdown,

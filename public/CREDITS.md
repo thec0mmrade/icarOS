@@ -69,13 +69,8 @@ This project is greatly augmented by code from the open source community. Thank 
 ## App Libraries
 
 - [Boxedwine](https://github.com/danoon2/Boxedwine)
-- [ClassiCube](https://github.com/UnknownShadow200/ClassiCube)
-- [DX-Ball](https://habr.com/en/post/147339/)
 - [emulatorjs](https://github.com/ethanaobrien/emulatorjs)
-- [Eruda](https://github.com/liriliri/eruda)
-- [js-dos](https://github.com/caiiiycuk/js-dos)
 - [jspaint](https://github.com/1j01/jspaint)
-- [Kiwi IRC](https://github.com/kiwiirc/kiwiirc)
 - [Marked](https://github.com/markedjs/marked)
   - [DOMPurify](https://github.com/cure53/DOMPurify)
 - [Monaco Editor](https://github.com/microsoft/monaco-editor)
@@ -88,7 +83,6 @@ This project is greatly augmented by code from the open source community. Thank 
 - [quickjs-emscripten](https://github.com/justjake/quickjs-emscripten)
 - [Ruffle](https://github.com/ruffle-rs/ruffle)
 - [Space Cadet Pinball](https://github.com/alula/SpaceCadetPinball)
-- [t-rex-runner](https://github.com/wayou/t-rex-runner)
 - [TIC-80](https://tic80.com/)
 - [TinyMCE](https://github.com/tinymce/tinymce)
 - [Video.js](https://github.com/videojs/video.js)

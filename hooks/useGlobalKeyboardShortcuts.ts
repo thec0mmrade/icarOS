@@ -70,7 +70,6 @@ const useGlobalKeyboardShortcuts = (): void => {
     E: () => open("FileExplorer"),
     ESCAPE: () => getNavButtonByTitle(START_BUTTON_TITLE)?.click(),
     F10: () => open("Terminal"),
-    F12: () => open("DevTools"),
     F5: () => window.location.reload(),
     R: () => open("Run"),
     S: () => getNavButtonByTitle(SEARCH_BUTTON_TITLE)?.click(),

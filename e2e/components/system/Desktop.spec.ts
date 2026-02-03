@@ -122,11 +122,6 @@ test.describe("has context menu", () => {
     });
   });
 
-  test("can inspect page", async ({ page }) => {
-    await clickContextMenuEntry(/^Inspect$/, { page });
-    await appIsOpen(/^DevTools$/, page);
-  });
-
   test("can view page source", async ({ page }) => {
     await clickContextMenuEntry(/^View page source$/, { page });
     await appIsOpen(/^index.html - Monaco Editor$/, page);
@@ -152,10 +147,5 @@ test.describe("has keyboard shortcuts", () => {
   test("can open terminal (shift + f10)", async ({ page }) => {
     await pressDesktopKeys("Shift+F10", { page });
     await appIsOpen(/^Terminal$/, page);
-  });
-
-  test("can inspect page (shift + f12)", async ({ page }) => {
-    await pressDesktopKeys("Shift+F12", { page });
-    await appIsOpen(/^DevTools$/, page);
   });
 });

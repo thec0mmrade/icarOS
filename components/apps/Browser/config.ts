@@ -1,9 +1,5 @@
 import { type ProxyState } from "components/apps/Browser/useProxyMenu";
-import {
-  FAVICON_BASE_PATH,
-  ICON_PATH,
-  PROGRAM_FILES_PATH,
-} from "utils/constants";
+import { FAVICON_BASE_PATH, ICON_PATH } from "utils/constants";
 
 type Bookmark = {
   icon: string;
@@ -14,13 +10,6 @@ type Bookmark = {
 
 type WaybackUrlInfo = {
   archived_snapshots: { closest: { url: string } };
-};
-
-export const DINO_GAME = {
-  icon: `${ICON_PATH}/Favicons/dino.webp`,
-  name: "T-Rex Chrome Dino Game",
-  path: `${PROGRAM_FILES_PATH}/Browser/dino/index.html`,
-  url: "chrome://dino",
 };
 
 export const bookmarks: Bookmark[] = [
@@ -34,7 +23,6 @@ export const bookmarks: Bookmark[] = [
     name: "Index of /",
     url: "http://localhost/",
   },
-  DINO_GAME,
   {
     icon: `${ICON_PATH}/Favicons/google.webp`,
     name: "Google",

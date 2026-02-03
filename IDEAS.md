@@ -2,12 +2,27 @@
 
 ## Plans
 
+### Web Resume Variant
+
+- Change favicon
+- "Hire me!" Call to action icon
+- Desktop link to website
+- Embed links to project examples and articles published
+- Change video player icon
+- Fix:
+- Paint
+- WebAmp
+
+### WebTop Variant
+
+- Add:
+- SSH Client
+- S3-Compatible Cloud Storage
+
 ### High Priority
 
 - 3rd Party App Support
 - Accessibility (Structure & Markup)
-- Add my old personal website
-  - [http://surf.to/misc](https://web.archive.org/web/20050826192118if_/http://surf.to:80/misc)
 - Screen Savers (.scr)
   - [After Dark](https://www.bryanbraun.com/after-dark-css/)
   - [Bouncing DVD Logo](https://www.bouncingdvdlogo.com/)
@@ -19,12 +34,9 @@
     - [next-offline](https://github.com/hanford/next-offline)
   - Service Worker (Firewall)
     - [Mock Service Worker](https://github.com/mswjs/msw)
-- Light Windows 10 Theme
-  - [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
 
 ### Medium Priority
 
-- Internationalization
 - Virtual Assistant
   - [ClippyJS](https://github.com/pi0/clippyjs)
   - AI Powered
@@ -35,7 +47,6 @@
       - speak.js ([1](https://github.com/kripken/speak.js), [2](https://github.com/mtttmpl/speak-js))
     - [Transformers.js](https://xenova.github.io/transformers.js/)
 - System Tray Icons
-- Crypto Wallet Explorer ([MainNet](https://mainnet.base.org))
 - Email App
   - Open SMTP Server
   - [openpgpjs](https://github.com/openpgpjs/openpgpjs)
@@ -50,7 +61,6 @@
 - Set WOFF/TTF as System Font
   - [wasm-ttf2woff](https://github.com/touchifyapp/wasm-ttf2woff)
   - [fontverter](https://github.com/papandreou/fontverter)
-- OneDrive File System Integration
 - Full Search Results in File Explorer
 - [WindowBlinds](https://www.stardock.com/products/windowblinds/) Theme Support
 - Better color cycling for wallpaper
@@ -59,8 +69,6 @@
 
 - Widget Support
   - [X-Eyes](https://github.com/prantlf/web-xeyes)
-- Tiles in Start Menu
-- Windows 11 Theme
 - Fancy Drag Zones for Windows
 - Calculator
   - [MCalculator](https://github.com/muzam1l/mcalculator)

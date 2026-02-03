@@ -567,10 +567,6 @@ const useFolderContextMenu = (
                   },
                   label: "View page source",
                 },
-                {
-                  action: () => open("DevTools", { url: "dom" }),
-                  label: "Inspect",
-                },
               ]
             : []),
         ];

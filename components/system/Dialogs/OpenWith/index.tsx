@@ -14,7 +14,6 @@ import { getExtension, haltEvent } from "utils/functions";
 
 const INCLUDED_PROCESSES = new Set([
   "BoxedWine",
-  "JSDOS",
   "Marked",
   "MonacoEditor",
   "OpenType",

@@ -14,14 +14,12 @@ import {
 } from "contexts/fileSystem/core";
 
 const KNOWN_IDB_DBS = [
-  "/classicube",
   "/data/saves",
   "ejs-bios",
   "ejs-roms",
   "ejs-romsdata",
   "ejs-states",
   "ejs-system",
-  "js-dos-cache (emulators-ui-saves)",
   "keyval-store",
 ];
 

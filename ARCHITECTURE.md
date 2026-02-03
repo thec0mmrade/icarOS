@@ -32,11 +32,13 @@ const contextFactory = <T,>(
 ```
 
 **How it works:**
+
 1. Takes a custom hook (`useContextState`) that returns the context state
 2. Optionally accepts a component to render alongside children
 3. Returns a memoized `Provider` and a `useContext` hook
 
 **Usage pattern:**
+
 ```typescript
 // In contexts/example/index.ts
 import contextFactory from "contexts/contextFactory";
@@ -65,24 +67,26 @@ ViewportProvider
 
 **Provider responsibilities:**
 
-| Provider | Purpose |
-|----------|---------|
-| `ViewportProvider` | Viewport dimensions, fullscreen state |
-| `ProcessProvider` | Window/process management, open/close/minimize |
-| `FileSystemProvider` | BrowserFS operations, file watchers |
-| `SessionProvider` | User preferences, window states persistence |
-| `MenuProvider` | Context menus throughout the application |
+| Provider             | Purpose                                        |
+| -------------------- | ---------------------------------------------- |
+| `ViewportProvider`   | Viewport dimensions, fullscreen state          |
+| `ProcessProvider`    | Window/process management, open/close/minimize |
+| `FileSystemProvider` | BrowserFS operations, file watchers            |
+| `SessionProvider`    | User preferences, window states persistence    |
+| `MenuProvider`       | Context menus throughout the application       |
 
 ### 1.3 Process Management
 
 Process management is handled by `contexts/process/`.
 
 **Process ID (PID) Format:**
+
 ```
 {AppName}__{url}__{instance}
 ```
 
 Examples:
+
 - `Terminal` - Simple process
 - `FileExplorer__/Users/Public/Desktop` - Process with URL
 - `FileExplorer__/Users/Public/Desktop__1` - Second instance
@@ -102,26 +106,26 @@ open() → linkElement() → [minimize/maximize] → closeWithTransition() → c
 ```typescript
 type Process = {
   // Window State
-  closing?: boolean;        // Triggers close animation
-  maximized?: boolean;      // Window is maximized
-  minimized?: boolean;      // Window is minimized
+  closing?: boolean; // Triggers close animation
+  maximized?: boolean; // Window is maximized
+  minimized?: boolean; // Window is minimized
 
   // DOM References
-  componentWindow?: HTMLElement;  // Main window element
-  peekElement?: HTMLElement;      // Taskbar preview element
-  taskbarEntry?: HTMLElement;     // Taskbar button element
+  componentWindow?: HTMLElement; // Main window element
+  peekElement?: HTMLElement; // Taskbar preview element
+  taskbarEntry?: HTMLElement; // Taskbar button element
 
   // Configuration
-  Component: React.ComponentType;  // Dynamic import component
-  icon: string;                    // Icon path
-  title: string;                   // Window title
-  defaultSize?: Size;              // Initial dimensions
+  Component: React.ComponentType; // Dynamic import component
+  icon: string; // Icon path
+  title: string; // Window title
+  defaultSize?: Size; // Initial dimensions
 
   // Optional Flags
-  singleton?: boolean;             // Only one instance allowed
-  dialogProcess?: boolean;         // Modal-like behavior
-  hasWindow?: boolean;             // Has visible window (false for Webamp)
-  hideTaskbarEntry?: boolean;      // Hidden from taskbar
+  singleton?: boolean; // Only one instance allowed
+  dialogProcess?: boolean; // Modal-like behavior
+  hasWindow?: boolean; // Has visible window (false for Webamp)
+  hideTaskbarEntry?: boolean; // Hidden from taskbar
 };
 ```
 
@@ -142,6 +146,7 @@ minimizeProcess(id) => (currentProcesses) => Processes
 ### 1.4 File System
 
 The file system uses **BrowserFS** with an **OverlayFS** configuration combining:
+
 - **HTTPRequest** (readable): Static files served from `/public`
 - **IndexedDB** (writable): User modifications persist locally
 
@@ -156,7 +161,7 @@ const FileSystemConfig = (writeToMemory = false) => ({
       options: {
         readable: {
           fs: "HTTPRequest",
-          options: { index },  // Generated file index
+          options: { index }, // Generated file index
         },
         writable: {
           fs: writeToMemory ? "InMemory" : "IndexedDB",
@@ -198,12 +203,12 @@ removeFsWatcher(folder: string, updateFiles: UpdateFiles): void
 
 Supports mounting additional file systems:
 
-| Method | Use Case |
-|--------|----------|
-| `mountFs(url)` | Mount ZIP/ISO archives |
-| `mapFs(directory, handle?)` | Map native directory via File System Access API |
-| `mountEmscriptenFs(FS)` | Mount Emscripten app storage |
-| `mountHttpRequestFs(mountPoint, url)` | Mount remote HTTP file index |
+| Method                                | Use Case                                        |
+| ------------------------------------- | ----------------------------------------------- |
+| `mountFs(url)`                        | Mount ZIP/ISO archives                          |
+| `mapFs(directory, handle?)`           | Map native directory via File System Access API |
+| `mountEmscriptenFs(FS)`               | Mount Emscripten app storage                    |
+| `mountHttpRequestFs(mountPoint, url)` | Mount remote HTTP file index                    |
 
 ### 1.5 Session Persistence
 
@@ -238,13 +243,18 @@ type SessionData = {
 Uses `requestIdleCallback` debouncing to avoid excessive writes:
 
 ```typescript
-useEffect(() => {
-  if (!loadingDebounceRef.current && sessionLoaded && !haltSession) {
-    maybeRequestIdleCallback(() => {
-      writeFile(SESSION_FILE, JSON.stringify({...sessionData}), true);
-    });
-  }
-}, [/* all session state dependencies */]);
+useEffect(
+  () => {
+    if (!loadingDebounceRef.current && sessionLoaded && !haltSession) {
+      maybeRequestIdleCallback(() => {
+        writeFile(SESSION_FILE, JSON.stringify({ ...sessionData }), true);
+      });
+    }
+  },
+  [
+    /* all session state dependencies */
+  ]
+);
 ```
 
 **Loading:**
@@ -274,9 +284,9 @@ const directory: Processes = {
     autoSizing: true,
 
     // Optional - Behavior
-    singleton: true,           // Only one instance
-    dialogProcess: true,       // Modal behavior
-    hasWindow: false,          // No window (e.g., Webamp)
+    singleton: true, // Only one instance
+    dialogProcess: true, // Modal behavior
+    hasWindow: false, // No window (e.g., Webamp)
 
     // Optional - Appearance
     backgroundColor: "#000",
@@ -284,7 +294,7 @@ const directory: Processes = {
     hideTitlebar: true,
     hideTaskbarEntry: true,
     hideTitlebarIcon: true,
-    preferProcessIcon: true,   // Use process icon in title
+    preferProcessIcon: true, // Use process icon in title
 
     // Optional - Dependencies
     libs: ["/Program Files/App/main.js"],
@@ -319,6 +329,7 @@ export default memo(Terminal);
 ```
 
 **The hook receives:**
+
 ```typescript
 type ContainerHookProps = {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -329,7 +340,7 @@ type ContainerHookProps = {
 };
 ```
 
-**Examples:** Terminal, DX-Ball, Marked, Quake3, SpaceCadet
+**Examples:** Terminal, Marked, Quake3, SpaceCadet
 
 #### Pattern 2: Custom Rendering
 
@@ -374,13 +385,14 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 };
 ```
 
-**Examples:** Paint (jspaint), IRC (KiwiIRC)
+**Examples:** Paint (jspaint)
 
 ### 2.3 Adding a New Application
 
 **Checklist:**
 
 1. **Create component directory:**
+
    ```
    components/apps/MyApp/
    ├── index.tsx           # Main component
@@ -390,6 +402,7 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
    ```
 
 2. **Register in directory:**
+
    ```typescript
    // contexts/process/directory.ts
    MyApp: {
@@ -418,13 +431,13 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 
 ### 2.4 Common Hooks
 
-| Hook | Purpose |
-|------|---------|
-| `useProcesses()` | Access process context |
-| `useFileSystem()` | File operations |
-| `useSession()` | User session/preferences |
-| `useTitle(id)` | Manage window title |
-| `useFileDrop({ id })` | Handle file drops |
+| Hook                  | Purpose                  |
+| --------------------- | ------------------------ |
+| `useProcesses()`      | Access process context   |
+| `useFileSystem()`     | File operations          |
+| `useSession()`        | User session/preferences |
+| `useTitle(id)`        | Manage window title      |
+| `useFileDrop({ id })` | Handle file drops        |
 
 ---
 
@@ -434,14 +447,14 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 
 Run via `yarn build:prebuild`:
 
-| Script | Purpose |
-|--------|---------|
-| `fs2json.js` | Generate file system index (`fs.9p.json`) |
-| `preloadIcons.js` | Pre-cache shortcut icons |
-| `cacheShortcuts.js` | Parse `.url` files for quick loading |
-| `searchIndex.js` | Build Lunr.js search index |
-| `robots.js` | Generate robots.txt and sitemap |
-| `rssBuilder.js` | Generate RSS feed |
+| Script              | Purpose                                   |
+| ------------------- | ----------------------------------------- |
+| `fs2json.js`        | Generate file system index (`fs.9p.json`) |
+| `preloadIcons.js`   | Pre-cache shortcut icons                  |
+| `cacheShortcuts.js` | Parse `.url` files for quick loading      |
+| `searchIndex.js`    | Build Lunr.js search index                |
+| `robots.js`         | Generate robots.txt and sitemap           |
+| `rssBuilder.js`     | Generate RSS feed                         |
 
 ### 3.2 File System Index Generation
 
@@ -460,6 +473,7 @@ Run via `yarn build:prebuild`:
 ```
 
 **Usage:**
+
 ```bash
 node scripts/fs2json.js --exclude .index,private --out public/.index/fs.9p.json ./public
 ```
@@ -468,10 +482,10 @@ node scripts/fs2json.js --exclude .index,private --out public/.index/fs.9p.json 
 
 Run via `yarn build:minify`:
 
-| Script | Purpose |
-|--------|---------|
-| `minifyHtml.js` | HTML optimization |
-| `minifyJs.js` | JS minification + worker inlining |
+| Script          | Purpose                           |
+| --------------- | --------------------------------- |
+| `minifyHtml.js` | HTML optimization                 |
+| `minifyJs.js`   | JS minification + worker inlining |
 
 **Worker Inlining (`minifyJs.js`):**
 
@@ -479,10 +493,10 @@ Converts Web Worker imports to inline data URLs:
 
 ```javascript
 // Before
-new Worker(new URL("worker.js", import.meta.url))
+new Worker(new URL("worker.js", import.meta.url));
 
 // After
-new Worker("data:application/javascript;base64,...")
+new Worker("data:application/javascript;base64,...");
 ```
 
 This uses regex matching and is a known fragile implementation.
@@ -507,12 +521,12 @@ yarn serve             # Serve from /out
 
 ### 4.1 Architectural Issues
 
-| Issue | Location | Impact | Recommendation |
-|-------|----------|--------|----------------|
-| Single theme only | `styles/themes.ts` | No light/dark theme switching | Implement light theme (infrastructure exists via `prefers-color-scheme`) |
-| Monolithic utilities | `utils/functions.ts` (1200+ lines) | Hard to maintain, navigate | Split into domain-specific modules (`utils/icon.ts`, `utils/format.ts`, etc.) |
-| Worker inlining via regex | `scripts/minifyJs.js` | Fragile, can break with bundler changes | Use webpack worker plugin or native import support |
-| Minimal unit test coverage | `__tests__/` | Only 2 functions tested | Add context, hook, and component tests |
+| Issue                      | Location                           | Impact                                  | Recommendation                                                                |
+| -------------------------- | ---------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
+| Single theme only          | `styles/themes.ts`                 | No light/dark theme switching           | Implement light theme (infrastructure exists via `prefers-color-scheme`)      |
+| Monolithic utilities       | `utils/functions.ts` (1200+ lines) | Hard to maintain, navigate              | Split into domain-specific modules (`utils/icon.ts`, `utils/format.ts`, etc.) |
+| Worker inlining via regex  | `scripts/minifyJs.js`              | Fragile, can break with bundler changes | Use webpack worker plugin or native import support                            |
+| Minimal unit test coverage | `__tests__/`                       | Only 2 functions tested                 | Add context, hook, and component tests                                        |
 
 ### 4.2 Technical Debt
 
@@ -540,6 +554,7 @@ export const features = {
 **Inconsistent Error Handling:**
 
 Mix of patterns across codebase:
+
 - Some use try-catch with empty catch blocks
 - Some ignore errors silently
 - Some reject with generic Error messages
@@ -549,13 +564,18 @@ Mix of patterns across codebase:
 ```typescript
 // utils/errors.ts
 export const ignoreError = <T>(fn: () => T, fallback: T): T => {
-  try { return fn(); } catch { return fallback; }
+  try {
+    return fn();
+  } catch {
+    return fallback;
+  }
 };
 ```
 
 **Magic Strings:**
 
 While `utils/constants.ts` centralizes many values, some magic strings remain scattered:
+
 - File extension checks
 - Path constructions
 - CSS values
@@ -563,30 +583,33 @@ While `utils/constants.ts` centralizes many values, some magic strings remain sc
 ### 4.3 Missing Features (from IDEAS.md)
 
 **High Priority:**
+
 - Progressive Web App / Offline support
 - Light theme implementation
 - Accessibility improvements (structure & markup)
 - Screen savers (`.scr` support)
 
 **Medium Priority:**
+
 - Internationalization
 - System tray icons
 - Task Manager
 - Batch file support
 
 **Low Priority:**
+
 - Widget support
 - Windows 11 theme
 - Start menu tiles
 
 ### 4.4 Performance Opportunities
 
-| Area | Current | Improvement |
-|------|---------|-------------|
-| Icon generation | `imageSrcs()` called repeatedly | Memoize based on path+size |
-| Session writes | Debounced via `requestIdleCallback` | More aggressive debouncing for rapid changes |
-| Heavy FS operations | Run on main thread | Move to Web Workers |
-| Bundle size | All apps bundled | More aggressive code splitting per app |
+| Area                | Current                             | Improvement                                  |
+| ------------------- | ----------------------------------- | -------------------------------------------- |
+| Icon generation     | `imageSrcs()` called repeatedly     | Memoize based on path+size                   |
+| Session writes      | Debounced via `requestIdleCallback` | More aggressive debouncing for rapid changes |
+| Heavy FS operations | Run on main thread                  | Move to Web Workers                          |
+| Bundle size         | All apps bundled                    | More aggressive code splitting per app       |
 
 ### 4.5 Code Quality Suggestions
 
@@ -602,8 +625,8 @@ try {
 try {
   // operation
 } catch (error) {
-  if (process.env.NODE_ENV === 'development') {
-    console.debug('Expected error:', error);
+  if (process.env.NODE_ENV === "development") {
+    console.debug("Expected error:", error);
   }
 }
 ```
@@ -615,15 +638,18 @@ try {
 ### 5.1 Current Coverage
 
 **Unit Tests (`__tests__/`):**
+
 - Only `__tests__/utils/functions.spec.ts` exists
 - Tests 2 functions: `getFormattedSize`, `loadFiles`
 
 **E2E Tests (`e2e/`):**
+
 - Good coverage with Playwright
 - Tests across Chromium, Firefox, WebKit
 - Includes accessibility testing via axe-core
 
 **E2E Test Files:**
+
 ```
 e2e/
 ├── components/
@@ -651,18 +677,18 @@ e2e/
 
 ```typescript
 // Example: __tests__/contexts/process.spec.ts
-describe('ProcessContext', () => {
-  it('opens a new process', () => {
+describe("ProcessContext", () => {
+  it("opens a new process", () => {
     const { result } = renderHook(() => useProcesses(), {
       wrapper: ProcessProvider,
     });
 
-    act(() => result.current.open('Terminal'));
+    act(() => result.current.open("Terminal"));
 
-    expect(result.current.processes).toHaveProperty('Terminal');
+    expect(result.current.processes).toHaveProperty("Terminal");
   });
 
-  it('closes a process with animation', async () => {
+  it("closes a process with animation", async () => {
     // Test closeWithTransition behavior
   });
 });
@@ -672,17 +698,17 @@ describe('ProcessContext', () => {
 
 ```typescript
 // Test OverlayFS behavior
-describe('FileSystem', () => {
-  it('reads static files', async () => {
+describe("FileSystem", () => {
+  it("reads static files", async () => {
     const { readFile } = await setupFileSystem();
-    const content = await readFile('/System/Icons/folder.webp');
+    const content = await readFile("/System/Icons/folder.webp");
     expect(content).toBeInstanceOf(Buffer);
   });
 
-  it('writes to IndexedDB layer', async () => {
+  it("writes to IndexedDB layer", async () => {
     const { writeFile, readFile } = await setupFileSystem();
-    await writeFile('/test.txt', 'Hello');
-    expect(await readFile('/test.txt').toString()).toBe('Hello');
+    await writeFile("/test.txt", "Hello");
+    expect(await readFile("/test.txt").toString()).toBe("Hello");
   });
 });
 ```
@@ -690,11 +716,11 @@ describe('FileSystem', () => {
 **Window Management Tests:**
 
 ```typescript
-describe('Window', () => {
-  it('maximizes on double-click titlebar', async () => {
+describe("Window", () => {
+  it("maximizes on double-click titlebar", async () => {
     const { page } = await setupE2E();
     await page.dblclick('[data-testid="titlebar"]');
-    expect(await page.locator('.maximized')).toBeVisible();
+    expect(await page.locator(".maximized")).toBeVisible();
   });
 });
 ```
@@ -724,19 +750,23 @@ NODE_OPTIONS='--openssl-legacy-provider' yarn dev
 ### 6.2 Code Standards
 
 **TypeScript:**
+
 - Strict mode enabled
 - No implicit `any` - explicit types required
 - No relative imports - use absolute paths from `baseUrl`
 
 **Styled Components:**
+
 - Alphabetical CSS property ordering
 - Run `yarn stylelint` to check
 
 **Formatting:**
+
 - Prettier handles formatting
 - Run `yarn prettier` to format all files
 
 **Pre-commit Hooks (via Husky):**
+
 ```json
 {
   "*": "prettier --ignore-unknown --write",
@@ -747,17 +777,17 @@ NODE_OPTIONS='--openssl-legacy-provider' yarn dev
 
 ### 6.3 Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `contexts/contextFactory.tsx` | Context factory pattern implementation |
-| `contexts/process/directory.ts` | Application registry |
-| `contexts/process/useProcessContextState.ts` | Window/process management |
-| `contexts/fileSystem/useFileSystemContextState.ts` | File system operations |
-| `contexts/session/useSessionContextState.ts` | Session persistence |
-| `utils/constants.ts` | Shared constants |
-| `utils/functions.ts` | Core utility functions |
-| `pages/_app.tsx` | Provider hierarchy |
-| `components/system/Apps/AppContainer.tsx` | App container pattern |
+| File                                               | Purpose                                |
+| -------------------------------------------------- | -------------------------------------- |
+| `contexts/contextFactory.tsx`                      | Context factory pattern implementation |
+| `contexts/process/directory.ts`                    | Application registry                   |
+| `contexts/process/useProcessContextState.ts`       | Window/process management              |
+| `contexts/fileSystem/useFileSystemContextState.ts` | File system operations                 |
+| `contexts/session/useSessionContextState.ts`       | Session persistence                    |
+| `utils/constants.ts`                               | Shared constants                       |
+| `utils/functions.ts`                               | Core utility functions                 |
+| `pages/_app.tsx`                                   | Provider hierarchy                     |
+| `components/system/Apps/AppContainer.tsx`          | App container pattern                  |
 
 ### 6.4 Running Tests
 
@@ -782,16 +812,19 @@ yarn unused-exports
 ### 6.5 Common Tasks
 
 **Adding a constant:**
+
 ```typescript
 // utils/constants.ts
 export const MY_CONSTANT = "value";
 ```
 
 **Adding a file type association:**
+
 1. Add extension to appropriate set in `utils/constants.ts`
 2. Add handler in `contexts/process/directory.ts` or file open logic
 
 **Modifying session persistence:**
+
 1. Update type in `contexts/session/types.ts`
 2. Add state in `useSessionContextState.ts`
 3. Include in the `writeFile` call's JSON
@@ -801,6 +834,7 @@ export const MY_CONSTANT = "value";
 ## Appendix: Architecture Diagrams
 
 ### Provider Hierarchy
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                   ViewportProvider                   │
@@ -823,6 +857,7 @@ export const MY_CONSTANT = "value";
 ```
 
 ### File System Layers
+
 ```
 ┌─────────────────────────────────────────┐
 │              MountableFileSystem         │
@@ -843,6 +878,7 @@ export const MY_CONSTANT = "value";
 ```
 
 ### Process Lifecycle
+
 ```
     ┌────────────────┐
     │ open(id, args) │
@@ -891,4 +927,4 @@ export const MY_CONSTANT = "value";
 
 ---
 
-*Last updated: Generated from codebase analysis*
+_Last updated: Generated from codebase analysis_

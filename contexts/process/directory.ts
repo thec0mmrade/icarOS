@@ -37,41 +37,6 @@ const directory: Processes = {
     icon: `${ICON_PATH}/chromium.webp`,
     title: "Browser",
   },
-  ClassiCube: {
-    Component: dynamic(() => import("components/apps/ClassiCube")),
-    backgroundColor: "#201E20",
-    defaultSize: {
-      height: 420,
-      width: 640,
-    },
-    icon: `${ICON_PATH}/classicube.webp`,
-    libs: [`${PROGRAM_FILES_PATH}/ClassiCube/ClassiCube.js`],
-    title: "ClassiCube",
-  },
-  DXBall: {
-    Component: dynamic(() => import("components/apps/DX-Ball")),
-    backgroundColor: "#000",
-    icon: `${ICON_PATH}/dxball.webp`,
-    libs: [`${PROGRAM_FILES_PATH}/DX-Ball/game.js`],
-    lockAspectRatio: true,
-    singleton: true,
-    title: "DX-Ball",
-  },
-  DevTools: {
-    Component: dynamic(() => import("components/apps/DevTools")),
-    backgroundColor: "#242424",
-    defaultSize: {
-      height: 380,
-      width: 545,
-    },
-    icon: `${ICON_PATH}/eruda.webp`,
-    libs: [
-      `${PROGRAM_FILES_PATH}/Eruda/eruda.js`,
-      `${PROGRAM_FILES_PATH}/Eruda/eruda-monitor.js`,
-    ],
-    singleton: true,
-    title: "DevTools",
-  },
   Emulator: {
     Component: dynamic(() => import("components/apps/Emulator")),
     backgroundColor: "#000",
@@ -97,34 +62,6 @@ const directory: Processes = {
     },
     icon: FOLDER_ICON,
     title: "File Explorer",
-  },
-  IRC: {
-    Component: dynamic(() => import("components/apps/IRC")),
-    backgroundColor: "#FFF",
-    defaultSize: {
-      height: 512,
-      width: 704,
-    },
-    icon: `${ICON_PATH}/kiwiirc.webp`,
-    libs: [`${PROGRAM_FILES_PATH}/kiwiirc/index.html`],
-    title: "IRC",
-  },
-  JSDOS: {
-    Component: dynamic(() => import("components/apps/JSDOS")),
-    autoSizing: true,
-    backgroundColor: "#000",
-    defaultSize: {
-      height: 200,
-      width: 320,
-    },
-    dependantLibs: [`${PROGRAM_FILES_PATH}/js-dos/wdosbox.wasm`],
-    icon: `${ICON_PATH}/jsdos.webp`,
-    libs: [
-      `${PROGRAM_FILES_PATH}/js-dos/emulators.js`,
-      `${PROGRAM_FILES_PATH}/js-dos/emulators-ui.js`,
-    ],
-    lockAspectRatio: true,
-    title: "js-dos v7",
   },
   Marked: {
     Component: dynamic(() => import("components/apps/Marked")),
@@ -382,7 +319,7 @@ const directory: Processes = {
       height: 390,
       width: 640,
     },
-    icon: `${ICON_PATH}/vlc.webp`,
+    icon: `${ICON_PATH}/videos.webp`,
     libs: [
       `${PROGRAM_FILES_PATH}/Video.js/video-js.min.css`,
       `${PROGRAM_FILES_PATH}/Video.js/video.min.js`,

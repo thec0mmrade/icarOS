@@ -108,28 +108,10 @@
 - Back/Forward & Reload
 - Google search via Address bar
 - IPFS protocol support
-- [chrome://dino](https://github.com/wayou/t-rex-runner) game
-
-### [DevTools](https://eruda.liriliri.io/)
-
-- Console, Elements, Network, Resources, Sources, DOM
-- Activate from Start Menu or **_SHIFT+F12_**
 
 ### [EmulatorJS](https://github.com/ethanaobrien/emulatorjs) (**_.32x, .a26, .a52, .a78, .gb, .gba, .gbc, .gen, .gg, .j64, .jag, .lnx, .n64, .nds, .nes, .ngc, .ngp, .pce, .sfc, .smc, .smd, .sms, .v64, .vb, .vboy, .ws, .wsc, .z64_**)
 
 - Plays console game roms
-
-### [IRC](https://kiwiirc.com/)
-
-- Internet Relay Chat Client
-- Connects over WebSockets
-
-### [js-dos](https://js-dos.com/) (**_.exe, .jsdos, .zip_**)
-
-- DOS emulator
-- Automatic save states on close
-  - /Users/Public/Snapshots
-- Automatic window resize
 
 ### [Marked](https://marked.js.org/) (**_.md_**)
 
@@ -223,14 +205,6 @@
 - Visualization support (["Milkdrop"](https://github.com/jberg/butterchurn))
 
 # Games 🎮
-
-### [ClassiCube](https://www.classicube.net/)
-
-- Minecraft Classic compatible client
-
-### [DX-Ball](https://habr.com/en/post/147339/)
-
-- Block breaker arcade game like Arkanoid
 
 ### [Space Cadet Pinball](https://github.com/alula/SpaceCadetPinball)
 
