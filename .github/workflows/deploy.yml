@@ -24,6 +24,8 @@ jobs:
           node-version: 22
       - name: Install Dependencies
         run: yarn install
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - name: Build
         run: yarn build
         env:
