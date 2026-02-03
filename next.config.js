@@ -46,6 +46,9 @@ const nextConfig = {
   reactProductionProfiling: false,
   reactStrictMode: !isProduction,
   webpack: (config) => {
+    // Use modern hash algorithm (OpenSSL 3.0 compatible)
+    config.output.hashFunction = "xxhash64";
+
     config.plugins.push(
       new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
         const mod = resource.request.replace(/^node:/, "");

@@ -32,8 +32,6 @@ yarn stylelint               # Check styled-components CSS
 yarn unused-exports          # Find unused exports
 ```
 
-**Note:** If you get `digital envelope routines::unsupported` during install, set `NODE_OPTIONS='--openssl-legacy-provider'`
-
 ## Architecture Quick Reference
 
 ### Context Factory Pattern
@@ -52,23 +50,23 @@ ViewportProvider → ProcessProvider → FileSystemProvider → SessionProvider 
 
 ### Key Directories
 
-| Directory | Purpose |
-|-----------|---------|
-| `/components/apps/` | Desktop applications (Browser, Terminal, Paint, etc.) |
-| `/components/system/` | Core OS components (Desktop, Taskbar, StartMenu, FileManager) |
-| `/contexts/` | React Context providers (fileSystem, process, session, menu, viewport) |
-| `/utils/` | Utility functions; `functions.ts` contains core helpers |
-| `/styles/` | Styled Components and theme configuration |
+| Directory             | Purpose                                                                |
+| --------------------- | ---------------------------------------------------------------------- |
+| `/components/apps/`   | Desktop applications (Browser, Terminal, Paint, etc.)                  |
+| `/components/system/` | Core OS components (Desktop, Taskbar, StartMenu, FileManager)          |
+| `/contexts/`          | React Context providers (fileSystem, process, session, menu, viewport) |
+| `/utils/`             | Utility functions; `functions.ts` contains core helpers                |
+| `/styles/`            | Styled Components and theme configuration                              |
 
 ### Key Files
 
-| File | Purpose |
-|------|---------|
-| `contexts/process/directory.ts` | App registry - add new apps here |
-| `contexts/process/useProcessContextState.ts` | Window/process management |
-| `contexts/fileSystem/useFileSystemContextState.ts` | File operations |
-| `contexts/session/useSessionContextState.ts` | Session persistence |
-| `utils/constants.ts` | Shared constants |
+| File                                               | Purpose                          |
+| -------------------------------------------------- | -------------------------------- |
+| `contexts/process/directory.ts`                    | App registry - add new apps here |
+| `contexts/process/useProcessContextState.ts`       | Window/process management        |
+| `contexts/fileSystem/useFileSystemContextState.ts` | File operations                  |
+| `contexts/session/useSessionContextState.ts`       | Session persistence              |
+| `utils/constants.ts`                               | Shared constants                 |
 
 ### File System
 
