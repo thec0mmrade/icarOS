@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **For comprehensive documentation**, see [ARCHITECTURE.md](./ARCHITECTURE.md) which covers system internals, app development patterns, build system, and improvement opportunities.
+
 ## Project Overview
 
 daedalOS is a browser-based desktop environment built with React/Next.js. It emulates a full operating system experience including window management, file system, taskbar, start menu, and 20+ applications.
@@ -32,41 +34,62 @@ yarn unused-exports          # Find unused exports
 
 **Note:** If you get `digital envelope routines::unsupported` during install, set `NODE_OPTIONS='--openssl-legacy-provider'`
 
-## Architecture
+## Architecture Quick Reference
 
-### State Management Pattern
+### Context Factory Pattern
 
-Uses a **Context Factory** pattern (`contexts/contextFactory.tsx`) to create React contexts with memoized providers:
+Uses `contexts/contextFactory.tsx` to create memoized providers:
 
 ```typescript
 contextFactory<T>(useContextState: () => T, ContextComponent?) => { Provider, useContext }
 ```
 
-### Provider Hierarchy
+### Provider Hierarchy (`pages/_app.tsx`)
 
-The app wraps providers in this order (`pages/_app.tsx`):
 ```
 ViewportProvider → ProcessProvider → FileSystemProvider → SessionProvider → MenuProvider
 ```
 
-Each context has its own directory under `/contexts/` containing the provider and associated hooks.
-
 ### Key Directories
 
-- `/components/apps/` - Individual desktop applications (Browser, Terminal, Paint, etc.)
-- `/components/system/` - Core OS components (Desktop, Taskbar, StartMenu, Files/FileManager)
-- `/contexts/` - React Context providers (fileSystem, process, session, menu, viewport)
-- `/hooks/` - Custom React hooks
-- `/utils/` - Utility functions; `functions.ts` contains 50+ core helpers
-- `/styles/` - Styled Components and theme configuration
+| Directory | Purpose |
+|-----------|---------|
+| `/components/apps/` | Desktop applications (Browser, Terminal, Paint, etc.) |
+| `/components/system/` | Core OS components (Desktop, Taskbar, StartMenu, FileManager) |
+| `/contexts/` | React Context providers (fileSystem, process, session, menu, viewport) |
+| `/utils/` | Utility functions; `functions.ts` contains core helpers |
+| `/styles/` | Styled Components and theme configuration |
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `contexts/process/directory.ts` | App registry - add new apps here |
+| `contexts/process/useProcessContextState.ts` | Window/process management |
+| `contexts/fileSystem/useFileSystemContextState.ts` | File operations |
+| `contexts/session/useSessionContextState.ts` | Session persistence |
+| `utils/constants.ts` | Shared constants |
 
 ### File System
 
-Uses BrowserFS with IndexedDB storage. Static file index generated at build time via `yarn build:fs:public`.
+- Uses BrowserFS with OverlayFS (HTTPRequest readable + IndexedDB writable)
+- Static file index generated at build time via `yarn build:fs:public`
+- Session persists to `/session.json`
 
 ### Window Management
 
-Windows use `react-rnd` for resize/drag. Process context manages window state (position, size, minimized/maximized).
+- Windows use `react-rnd` for resize/drag
+- Process context manages state (position, size, minimized/maximized)
+- PID format: `{AppName}__{url}__{instance}`
+
+## Adding New Applications
+
+1. Create component in `/components/apps/AppName/`
+2. Register in `/contexts/process/directory.ts`
+3. Add icon to `/public/System/Icons/`
+4. Add libs to `/public/Program Files/` if needed
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md#2-application-development-guide) for detailed patterns.
 
 ## Code Style Requirements
 
