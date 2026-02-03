@@ -1,6 +1,7 @@
 // @ts-check
 
 const isProduction = process.env.NODE_ENV === "production";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const bundleAnalyzer = process.env.npm_config_argv?.includes(
   "build:bundle-analyzer"
@@ -13,6 +14,8 @@ const webpack = require("webpack");
  * @type {import("next").NextConfig}
  * */
 const nextConfig = {
+  assetPrefix: basePath,
+  basePath,
   compiler: {
     reactRemoveProperties: isProduction,
     removeConsole: isProduction,
