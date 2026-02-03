@@ -15,6 +15,7 @@ import { useFileSystem } from "contexts/fileSystem";
 import useResizeObserver from "hooks/useResizeObserver";
 import { getFormattedSize, haltEvent, label } from "utils/functions";
 import { UNKNOWN_SIZE } from "contexts/fileSystem/core";
+import { ICON_PATH } from "utils/constants";
 import Icon from "styles/common/Icon";
 import Button from "styles/common/Button";
 
@@ -118,7 +119,7 @@ const StatusBar: FC<StatusBarProps> = ({
           <Icon
             displaySize={16}
             imgSize={16}
-            src="/System/Icons/details_view.webp"
+            src={`${ICON_PATH}/details_view.webp`}
           />
         </Button>
         <Button
@@ -131,7 +132,7 @@ const StatusBar: FC<StatusBarProps> = ({
           <Icon
             displaySize={16}
             imgSize={16}
-            src="/System/Icons/icon_view.webp"
+            src={`${ICON_PATH}/icon_view.webp`}
           />
         </Button>
       </nav>

@@ -15,10 +15,11 @@ import {
   type Prompt,
 } from "components/system/Taskbar/AI/types";
 import { isAvailable } from "hooks/useWindowAI";
+import { PROGRAM_FILES_PATH } from "utils/constants";
 
 const MARKED_LIBS = [
-  "/Program Files/Marked/marked.min.js",
-  "/Program Files/Marked/purify.min.js",
+  `${PROGRAM_FILES_PATH}/Marked/marked.min.js`,
+  `${PROGRAM_FILES_PATH}/Marked/purify.min.js`,
 ];
 
 const CONVO_STYLE_TEMPS: Record<

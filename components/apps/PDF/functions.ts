@@ -1,14 +1,14 @@
 import { type TextItem } from "pdfjs-dist/types/src/display/api";
+import { PROGRAM_FILES_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 export const readPdfText = async (pdfDoc: Buffer): Promise<string> => {
-  await loadFiles(["/Program Files/PDF.js/pdf.js"]);
+  await loadFiles([`${PROGRAM_FILES_PATH}/PDF.js/pdf.js`]);
 
   let text = "";
 
   if (window.pdfjsLib) {
-    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "/Program Files/PDF.js/pdf.worker.js";
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PROGRAM_FILES_PATH}/PDF.js/pdf.worker.js`;
 
     try {
       const doc = await window.pdfjsLib.getDocument(pdfDoc).promise;

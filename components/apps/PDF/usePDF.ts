@@ -15,7 +15,7 @@ import { type MetadataInfo } from "components/apps/PDF/types";
 import useTitle from "components/system/Window/useTitle";
 import { useFileSystem } from "contexts/fileSystem";
 import { useProcesses } from "contexts/process";
-import { BASE_2D_CONTEXT_OPTIONS } from "utils/constants";
+import { BASE_2D_CONTEXT_OPTIONS, PROGRAM_FILES_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 export const scales = [
@@ -174,8 +174,7 @@ const usePDF = (
   useEffect(() => {
     loadFiles(libs).then(() => {
       if (window.pdfjsLib) {
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-          "/Program Files/PDF.js/pdf.worker.js";
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PROGRAM_FILES_PATH}/PDF.js/pdf.worker.js`;
 
         if (processUrl) {
           renderPages(processUrl).catch(() => {

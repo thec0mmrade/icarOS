@@ -1,3 +1,4 @@
+import { PROGRAM_FILES_PATH } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 type Pyodide = {
@@ -21,7 +22,7 @@ declare global {
 
 const config = {
   fullStdLib: false,
-  indexURL: "/Program Files/Pyodide/",
+  indexURL: `${PROGRAM_FILES_PATH}/Pyodide/`,
 };
 
 const versionCommand = "import sys\r\nsys.version\r\n";
@@ -33,7 +34,7 @@ export const runPython = async (
   code: string,
   printLn: (message: string) => void
 ): Promise<void> => {
-  await loadFiles(["/Program Files/Pyodide/pyodide.js"]);
+  await loadFiles([`${PROGRAM_FILES_PATH}/Pyodide/pyodide.js`]);
 
   if (!window.pyodide && window.loadPyodide) {
     window.pyodide = await window.loadPyodide(config);

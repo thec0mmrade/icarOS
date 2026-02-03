@@ -1,5 +1,6 @@
 import { type ITerminalOptions } from "xterm";
 import processDirectory from "contexts/process/directory";
+import { SYSTEM_PATH } from "utils/constants";
 
 export const config: ITerminalOptions & { cols: number; rows: number } = {
   allowTransparency: true,
@@ -49,4 +50,4 @@ export const PRIMARY_NAME_SERVER = [
 ];
 export const BACKUP_NAME_SERVER = ["https://dns.google/resolve", "8.8.8.8"];
 
-export const LINUX_IMAGE_PATH = "/System/linux.bin";
+export const LINUX_IMAGE_PATH = `${SYSTEM_PATH}/linux.bin`;

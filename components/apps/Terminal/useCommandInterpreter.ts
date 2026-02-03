@@ -54,6 +54,7 @@ import {
   HIGH_PRIORITY_REQUEST,
   MILLISECONDS_IN_SECOND,
   PACKAGE_DATA,
+  PROGRAM_FILES_PATH,
   SHORTCUT_EXTENSION,
   SYSTEM_PATH,
 } from "utils/constants";
@@ -761,7 +762,7 @@ const useCommandInterpreter = (
           }
           case "neofetch":
           case "systeminfo": {
-            await loadFiles(["/Program Files/Xterm.js/ua-parser.js"]);
+            await loadFiles([`${PROGRAM_FILES_PATH}/Xterm.js/ua-parser.js`]);
 
             const {
               browser,

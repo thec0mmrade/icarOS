@@ -8,7 +8,12 @@ import {
   type WebampCI,
 } from "components/apps/Webamp/types";
 import { centerPosition } from "components/system/Window/functions";
-import { HOME, MP3_MIME_TYPE, PACKAGE_DATA } from "utils/constants";
+import {
+  HOME,
+  MP3_MIME_TYPE,
+  PACKAGE_DATA,
+  PROGRAM_FILES_PATH,
+} from "utils/constants";
 import { bufferToBlob, cleanUpBufferUrl, loadFiles } from "utils/functions";
 
 const BROKEN_PRESETS = new Set([
@@ -187,59 +192,61 @@ export const loadMilkdropWhenNeeded = (webamp: WebampCI): void => {
     const { milkdrop, windows } = webamp.store.getState();
 
     if (windows?.genWindows?.milkdrop?.open && !milkdrop?.butterchurn) {
-      loadFiles(["/Program Files/Webamp/butterchurn.min.js"]).then(() => {
-        if (!window.butterchurn?.default) return;
+      loadFiles([`${PROGRAM_FILES_PATH}/Webamp/butterchurn.min.js`]).then(
+        () => {
+          if (!window.butterchurn?.default) return;
 
-        loadButterchurn(webamp, window.butterchurn.default);
+          loadButterchurn(webamp, window.butterchurn.default);
 
-        const { playlist, main: mainWindow } = windows.genWindows || {};
-        const { x = 0, y = 0 } =
-          (playlist?.open ? playlist?.position : mainWindow?.position) || {};
+          const { playlist, main: mainWindow } = windows.genWindows || {};
+          const { x = 0, y = 0 } =
+            (playlist?.open ? playlist?.position : mainWindow?.position) || {};
 
-        webamp.store.dispatch({
-          positions: {
-            milkdrop: {
-              x,
-              y: y + BASE_WINDOW_SIZE.height,
+          webamp.store.dispatch({
+            positions: {
+              milkdrop: {
+                x,
+                y: y + BASE_WINDOW_SIZE.height,
+              },
             },
-          },
-          type: "UPDATE_WINDOW_POSITIONS",
-        });
+            type: "UPDATE_WINDOW_POSITIONS",
+          });
 
-        unsubscribe();
+          unsubscribe();
 
-        webamp.store.subscribe(() => {
-          const webampDesktop = [...document.body.children].find((node) =>
-            node.classList?.contains("webamp-desktop")
-          );
+          webamp.store.subscribe(() => {
+            const webampDesktop = [...document.body.children].find((node) =>
+              node.classList?.contains("webamp-desktop")
+            );
 
-          if (webampDesktop) {
-            const main = document.querySelector("main");
+            if (webampDesktop) {
+              const main = document.querySelector("main");
 
-            if (main) {
-              [...main.children].forEach((node) => {
-                if (node.classList?.contains("webamp-desktop")) {
-                  node.remove();
-                }
-              });
-              main.append(webampDesktop);
+              if (main) {
+                [...main.children].forEach((node) => {
+                  if (node.classList?.contains("webamp-desktop")) {
+                    node.remove();
+                  }
+                });
+                main.append(webampDesktop);
+              }
             }
-          }
-        });
+          });
 
-        import("butterchurn-presets").then(({ default: presets }) => {
-          const resolvedPresets: ButterChurnWebampPreset[] = Object.entries(
-            presets as ButterChurnPresets
-          ).map(([name, preset]) => ({
-            name,
-            preset,
-          }));
+          import("butterchurn-presets").then(({ default: presets }) => {
+            const resolvedPresets: ButterChurnWebampPreset[] = Object.entries(
+              presets as ButterChurnPresets
+            ).map(([name, preset]) => ({
+              name,
+              preset,
+            }));
 
-          loadButterchurnPresets(webamp, resolvedPresets);
-          loadButterchurnPreset(webamp);
-          cycleButterchurnPresets(webamp);
-        });
-      });
+            loadButterchurnPresets(webamp, resolvedPresets);
+            loadButterchurnPreset(webamp);
+            cycleButterchurnPresets(webamp);
+          });
+        }
+      );
     }
   });
 };

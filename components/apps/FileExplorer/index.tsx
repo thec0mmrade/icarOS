@@ -10,6 +10,7 @@ import { useProcesses } from "contexts/process";
 import {
   COMPRESSED_FOLDER_ICON,
   FOLDER_ICON,
+  ICON_PATH,
   MOUNTED_FOLDER_ICON,
   PREVENT_SCROLL,
   ROOT_NAME,
@@ -106,7 +107,7 @@ const FileExplorer: FC<ComponentProcessProps> = ({ id }) => {
   useEffect(() => {
     if (componentWindow && !closing && !url) {
       setProcessUrl(id, "/");
-      setProcessIcon(id, "/System/Icons/pc.webp");
+      setProcessIcon(id, `${ICON_PATH}/pc.webp`);
     }
   }, [closing, id, componentWindow, setProcessIcon, setProcessUrl, url]);
 

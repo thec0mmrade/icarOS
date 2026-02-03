@@ -1,4 +1,4 @@
-import { TASKBAR_HEIGHT } from "utils/constants";
+import { PROGRAM_FILES_PATH, TASKBAR_HEIGHT } from "utils/constants";
 import { loadFiles } from "utils/functions";
 
 type SheepOptions = {
@@ -17,16 +17,16 @@ declare global {
 }
 
 const PETS: Record<string, [string, number]> = {
-  blue_sheep: ["/Program Files/eSheep/blue_sheep.xml", 12],
-  eSheep: ["/Program Files/eSheep/eSheep.xml", 12],
-  fox: ["/Program Files/eSheep/fox.xml", 4],
-  green_sheep: ["/Program Files/eSheep/green_sheep.xml", 12],
-  mimiko: ["/Program Files/eSheep/mimiko.xml", 4],
-  neko: ["/Program Files/eSheep/neko.xml", 10],
-  orange_sheep: ["/Program Files/eSheep/orange_sheep.xml", 12],
-  pingus: ["/Program Files/eSheep/pingus.xml", 10],
-  red_sheep: ["/Program Files/eSheep/red_sheep.xml", 12],
-  yellow_sheep: ["/Program Files/eSheep/yellow_sheep.xml", 12],
+  blue_sheep: [`${PROGRAM_FILES_PATH}/eSheep/blue_sheep.xml`, 12],
+  eSheep: [`${PROGRAM_FILES_PATH}/eSheep/eSheep.xml`, 12],
+  fox: [`${PROGRAM_FILES_PATH}/eSheep/fox.xml`, 4],
+  green_sheep: [`${PROGRAM_FILES_PATH}/eSheep/green_sheep.xml`, 12],
+  mimiko: [`${PROGRAM_FILES_PATH}/eSheep/mimiko.xml`, 4],
+  neko: [`${PROGRAM_FILES_PATH}/eSheep/neko.xml`, 10],
+  orange_sheep: [`${PROGRAM_FILES_PATH}/eSheep/orange_sheep.xml`, 12],
+  pingus: [`${PROGRAM_FILES_PATH}/eSheep/pingus.xml`, 10],
+  red_sheep: [`${PROGRAM_FILES_PATH}/eSheep/red_sheep.xml`, 12],
+  yellow_sheep: [`${PROGRAM_FILES_PATH}/eSheep/yellow_sheep.xml`, 12],
 };
 
 let oneSheepLaunched = false;
@@ -44,7 +44,7 @@ const pickRandomPet = (): string => {
 };
 
 export const spawnSheep = (pickRandom?: boolean): Promise<void> =>
-  loadFiles(["/Program Files/eSheep/eSheep.js"]).then(() => {
+  loadFiles([`${PROGRAM_FILES_PATH}/eSheep/eSheep.js`]).then(() => {
     if (window.Sheep) {
       const sheep = new window.Sheep({
         allowPopup: "no",
@@ -61,7 +61,7 @@ export const spawnSheep = (pickRandom?: boolean): Promise<void> =>
         sheep.Start(pickRandomPet());
       } else {
         oneSheepLaunched = true;
-        sheep.Start("/Program Files/eSheep/eSheep.xml");
+        sheep.Start(`${PROGRAM_FILES_PATH}/eSheep/eSheep.xml`);
       }
     }
   });

@@ -3,6 +3,7 @@ import {
   HOME,
   MILLISECONDS_IN_MINUTE,
   MILLISECONDS_IN_SECOND,
+  PROGRAM_FILES_PATH,
 } from "utils/constants";
 
 export const BASE_RW_RELAYS = [
@@ -19,7 +20,7 @@ export const DM_KIND = 4;
 export const PRIVATE_KEY_IDB_NAME = "nostr_private_key";
 export const PUBLIC_KEY_IDB_NAME = "nostr_public_key";
 
-export const NOTIFICATION_SOUND = "/Program Files/Messenger/notification.mp3";
+export const NOTIFICATION_SOUND = `${PROGRAM_FILES_PATH}/Messenger/notification.mp3`;
 
 export const UNKNOWN_PUBLIC_KEY = "?";
 

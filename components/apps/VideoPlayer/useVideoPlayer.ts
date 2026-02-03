@@ -24,6 +24,7 @@ import { useProcesses } from "contexts/process";
 import {
   AUDIO_FILE_EXTENSIONS,
   DESKTOP_PATH,
+  PROGRAM_FILES_PATH,
   VIDEO_FALLBACK_MIME_TYPE,
 } from "utils/constants";
 import {
@@ -233,7 +234,7 @@ const useVideoPlayer = ({
           canvasMode(true, target?.player as VideoPlayer & ControlBar);
 
           await loadFiles(
-            ["/Program Files/Video.js/codecbox.js/codecbox_init.js"],
+            [`${PROGRAM_FILES_PATH}/Video.js/codecbox.js/codecbox_init.js`],
             false,
             true
           );

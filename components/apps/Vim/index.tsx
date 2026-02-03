@@ -8,7 +8,10 @@ import useFileDrop from "components/system/Files/FileManager/useFileDrop";
 import useTitle from "components/system/Window/useTitle";
 import { useFileSystem } from "contexts/fileSystem";
 import { useProcesses } from "contexts/process";
-import { DEFAULT_TEXT_FILE_SAVE_PATH } from "utils/constants";
+import {
+  DEFAULT_TEXT_FILE_SAVE_PATH,
+  PROGRAM_FILES_PATH,
+} from "utils/constants";
 import { haltEvent, loadFiles } from "utils/functions";
 
 const Vim: FC<ComponentProcessProps> = ({ id }) => {
@@ -43,7 +46,7 @@ const Vim: FC<ComponentProcessProps> = ({ id }) => {
       containerWindow: document
         .querySelector("#vimjs-container")
         ?.closest("section"),
-      memoryInitializerPrefixURL: "/Program Files/Vim.js/",
+      memoryInitializerPrefixURL: `${PROGRAM_FILES_PATH}/Vim.js/`,
       postRun: [
         () => {
           loading.current = false;

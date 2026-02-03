@@ -21,6 +21,7 @@ import {
   FOLDER_ICON,
   HEIF_IMAGE_FORMATS,
   ICON_CACHE,
+  ICON_PATH,
   ICON_CACHE_EXTENSION,
   ICON_GIF_FPS,
   ICON_GIF_SECONDS,
@@ -134,7 +135,7 @@ export const getIconByFileExtension = (extension: string): string => {
   const { icon: extensionIcon = "", process: [defaultProcess = ""] = [] } =
     extension in extensions ? extensions[extension] : {};
 
-  if (extensionIcon) return `/System/Icons/${extensionIcon}.webp`;
+  if (extensionIcon) return `${ICON_PATH}/${extensionIcon}.webp`;
 
   return (
     processDirectory[defaultProcess || getDefaultFileViewer(extension)]?.icon ||
@@ -560,7 +561,7 @@ export const getInfoWithExtension = (
       }
       break;
     case ".exe":
-      getInfoByFileExtension("/System/Icons/executable.webp", (signal) =>
+      getInfoByFileExtension(`${ICON_PATH}/executable.webp`, (signal) =>
         fs.readFile(path, async (error, contents = Buffer.from("")) => {
           if (!error && contents.length > 0 && !signal.aborted) {
             const { extractExeIcon } = await import(
@@ -580,7 +581,7 @@ export const getInfoWithExtension = (
     case ".mp3":
       getInfoByFileExtension(
         extension === ".mp3"
-          ? `/System/Icons/${extensions[".mp3"].icon as string}.webp`
+          ? `${ICON_PATH}/${extensions[".mp3"].icon as string}.webp`
           : undefined,
         (signal) =>
           fs.readFile(path, (error, contents = Buffer.from("")) => {
@@ -604,7 +605,7 @@ export const getInfoWithExtension = (
       decodeImage();
       break;
     case ".whtml":
-      getInfoByFileExtension("/System/Icons/tinymce.webp", (signal) =>
+      getInfoByFileExtension(`${ICON_PATH}/tinymce.webp`, (signal) =>
         fs.readFile(path, async (error, contents = Buffer.from("")) => {
           if (!error && contents.length > 0 && !signal.aborted) {
             const htmlToImage = await getHtmlToImage();

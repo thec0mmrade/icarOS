@@ -1,4 +1,6 @@
-export const SAVE_PATH = "/Program Files/DX-Ball/dx-ball.sav";
+import { PROGRAM_FILES_PATH } from "utils/constants";
+
+export const SAVE_PATH = `${PROGRAM_FILES_PATH}/DX-Ball/dx-ball.sav`;
 
 export const DX_BALL_GLOBALS = [
   "DXBall",

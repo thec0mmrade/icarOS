@@ -34,6 +34,7 @@ import Button from "styles/common/Button";
 import Icon from "styles/common/Icon";
 import {
   FAVICON_BASE_PATH,
+  ICON_PATH,
   IFRAME_CONFIG,
   ONE_TIME_PASSIVE_EVENT,
   SHORTCUT_EXTENSION,
@@ -336,7 +337,7 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
             }
 
             if (addressInput.startsWith("ipfs://")) {
-              setIcon(id, "/System/Icons/Favicons/ipfs.webp");
+              setIcon(id, `${ICON_PATH}/Favicons/ipfs.webp`);
             } else {
               const favicon = new Image();
               const faviconUrl = `${

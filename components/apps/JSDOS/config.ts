@@ -2,6 +2,7 @@ import {
   type DosOptions,
   type EmulatorFunction,
 } from "emulators-ui/dist/types/js-dos";
+import { PROGRAM_FILES_PATH } from "utils/constants";
 
 export const dosOptions: DosOptions = {
   emulatorFunction: "dosWorker" as EmulatorFunction,
@@ -17,13 +18,13 @@ export const globals = [
   "worker",
 ];
 
-export const pathPrefix = "/Program Files/js-dos/";
+export const pathPrefix = `${PROGRAM_FILES_PATH}/js-dos/`;
 
 export const saveExtension = ".zip.save";
 
 export const zipConfigFiles = {
-  ".jsdos/dosbox.conf": "/Program Files/js-dos/dosbox.conf",
-  ".jsdos/jsdos.json": "/Program Files/js-dos/jsdos.json",
+  ".jsdos/dosbox.conf": `${PROGRAM_FILES_PATH}/js-dos/dosbox.conf`,
+  ".jsdos/jsdos.json": `${PROGRAM_FILES_PATH}/js-dos/jsdos.json`,
 };
 
 export const CAPTURED_KEYS = new Set([
