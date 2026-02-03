@@ -14,7 +14,8 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
         ($singleLine ? SINGLE_LINE_HEIGHT_ADDITION : 0),
       theme.sizes.search.size,
       theme.sizes.taskbar.button.width,
-      true
+      true,
+      theme
     )}
 
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};

@@ -14,6 +14,7 @@ const StyledMenu = styled(motion.nav).attrs<StyledMenuProps>(({ $x, $y }) => ({
 }))<StyledMenuProps>`
   background-color: rgb(43 43 43);
   border: 1px solid rgb(160 160 160);
+  border-radius: ${({ theme }) => (theme.name === "Breeze" ? "4px" : "0")};
   box-shadow:
     1px 1px 1px hsl(0 0% 20% / 70%),
     2px 2px 2px hsl(0 0% 10% / 70%);
@@ -48,7 +49,8 @@ const StyledMenu = styled(motion.nav).attrs<StyledMenuProps>(({ $x, $y }) => ({
 
       &:hover,
       &.active {
-        background-color: rgb(65 65 65);
+        background-color: ${({ theme }) =>
+          theme.name === "Breeze" ? "#3daee9" : "rgb(65 65 65)"};
       }
 
       figcaption {

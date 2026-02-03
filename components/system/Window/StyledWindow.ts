@@ -6,11 +6,14 @@ type StyledWindowProps = {
   $backgroundBlur?: string;
   $backgroundColor?: string;
   $isForeground: boolean;
+  $maximized?: boolean;
 };
 
 const StyledWindow = styled(motion.section)<StyledWindowProps>`
   background-color: ${({ $backgroundColor, theme }) =>
     $backgroundColor || theme.colors.window.background};
+  border-radius: ${({ $maximized, theme }) =>
+    $maximized ? "0" : theme.sizes.window.borderRadius};
   box-shadow: ${({ $isForeground, theme }) =>
     $isForeground
       ? theme.colors.window.shadow

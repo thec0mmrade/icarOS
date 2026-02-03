@@ -58,7 +58,7 @@ const sizes = {
       buttonWidth: "40px",
       chatWidth: 415,
     },
-    blur: "5px",
+    blur: "8px",
     button: {
       iconSize: "15px",
       width: 36,
@@ -80,12 +80,12 @@ const sizes = {
     buttonIconWidth: "10px",
     buttonWidth: "45px",
     fontSize: "12px",
-    height: 30,
+    height: 32,
     iconMarginRight: "4px",
     iconSize: "16px",
   },
   window: {
-    borderRadius: "0px",
+    borderRadius: "4px",
     cascadeOffset: 26,
     outline: "1px",
     textTopPadding: 14,

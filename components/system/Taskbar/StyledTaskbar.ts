@@ -5,6 +5,7 @@ const TASKBAR_Z_INDEX = 100000;
 
 const StyledTaskbar = styled.nav`
   background-color: ${({ theme }) => theme.colors.taskbar.background};
+  border-top: none;
   bottom: 0;
   contain: size layout;
   height: ${TASKBAR_HEIGHT}px;

@@ -19,6 +19,7 @@ const Window: FC<ComponentProcessProps> = ({ children, id }) => {
     backgroundColor,
     Component,
     hideTitlebar,
+    maximized,
     peekElement,
   } = process || {};
   const { foregroundId } = useSession();
@@ -40,6 +41,7 @@ const Window: FC<ComponentProcessProps> = ({ children, id }) => {
         $backgroundBlur={backgroundBlur}
         $backgroundColor={backgroundColor}
         $isForeground={isForeground}
+        $maximized={maximized}
         {...focusableProps}
         {...windowTransitions}
       >

@@ -6,12 +6,14 @@ const StyledTerminal = styled.div`
   width: 100%;
 
   .terminal {
-    backdrop-filter: blur(8px);
+    backdrop-filter: ${({ theme }) =>
+      theme.name === "Breeze" ? "none" : "blur(8px)"};
     height: 100% !important;
   }
 
   .xterm-viewport {
-    ${ScrollBars()};
+    ${({ theme }) =>
+      ScrollBars(17, 0, 0, theme.name === "Breeze" ? "light" : "dark")};
     width: 100% !important;
   }
 
@@ -20,6 +22,11 @@ const StyledTerminal = styled.div`
       .xterm-cursor-underline {
         border-bottom-color: #f3f3f3 !important;
         border-bottom-width: 4px !important;
+      }
+
+      .xterm-cursor-block {
+        background-color: ${({ theme }) =>
+          theme.name === "Breeze" ? "#fcfcfc" : "#f3f3f3"} !important;
       }
 
       .xterm-cursor-blink {

@@ -15,7 +15,13 @@ type StyledStartMenuProps = {
 
 const StyledStartMenu = styled(motion.nav)<StyledStartMenuProps>`
   ${({ theme }) =>
-    TaskbarPanel(theme.sizes.startMenu.maxHeight, theme.sizes.startMenu.size)}
+    TaskbarPanel(
+      theme.sizes.startMenu.maxHeight,
+      theme.sizes.startMenu.size,
+      0,
+      false,
+      theme
+    )}
 
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
 

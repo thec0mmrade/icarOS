@@ -2,6 +2,7 @@ import styled, { type DefaultTheme } from "styled-components";
 
 type StyledTitlebarProps = {
   $foreground: boolean;
+  $maximized?: boolean;
 };
 
 const styledBorder = ({
@@ -18,6 +19,10 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       ? theme.colors.titleBar.background
       : theme.colors.titleBar.backgroundInactive};
   border-bottom: ${styledBorder};
+  border-radius: ${({ $maximized, theme }) =>
+    $maximized
+      ? "0"
+      : `${theme.sizes.window.borderRadius} ${theme.sizes.window.borderRadius} 0 0`};
   display: flex;
   height: ${({ theme }) => theme.sizes.titleBar.height}px;
   position: relative;
@@ -76,6 +81,10 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       width: ${({ theme }) => theme.sizes.titleBar.buttonWidth};
 
       svg {
+        color: ${({ $foreground, theme }) =>
+          $foreground
+            ? theme.colors.titleBar.text
+            : theme.colors.titleBar.buttonInactive};
         fill: ${({ $foreground, theme }) =>
           $foreground
             ? theme.colors.titleBar.text
@@ -96,6 +105,7 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
           theme.colors.titleBar.backgroundHover};
 
         svg {
+          color: ${({ theme }) => theme.colors.titleBar.text};
           fill: ${({ theme }) => theme.colors.titleBar.text};
         }
 
@@ -106,17 +116,28 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       }
 
       &:active {
-        background-color: rgb(51 51 51);
+        background-color: ${({ theme }) =>
+          theme.name === "Breeze" ? "#3d4549" : "rgb(51 51 51)"};
 
         &.close {
-          background-color: rgb(139 10 20);
+          background-color: ${({ theme }) =>
+            theme.name === "Breeze" ? "#b32d3c" : "rgb(139 10 20)"};
         }
+      }
+
+      &:last-child {
+        border-radius: ${({ $maximized, theme }) =>
+          $maximized ? "0" : `0 ${theme.sizes.window.borderRadius} 0 0`};
       }
 
       &:disabled {
         svg {
-          fill: ${({ $foreground }) =>
-            $foreground ? "rgb(50, 50, 50)" : "rgb(60, 60, 60)"};
+          fill: ${({ $foreground, theme }) =>
+            theme.name === "Breeze"
+              ? "#7f8c8d"
+              : $foreground
+                ? "rgb(50, 50, 50)"
+                : "rgb(60, 60, 60)"};
         }
 
         &:hover {

@@ -22,7 +22,7 @@ export const DEFAULT_ASCENDING = true;
 
 export const DEFAULT_CLOCK_SOURCE: ClockSource = "local";
 
-export const DEFAULT_THEME: ThemeName = "defaultTheme";
+export const DEFAULT_THEME: ThemeName = "breezeTheme";
 
 export const DEFAULT_WALLPAPER = "VANTA";
 
@@ -301,6 +301,8 @@ export const PROGRAM_FILES_PATH = `${BASE_PATH}/Program Files`;
 export const ROOT_SHORTCUT = `${ROOT_NAME}.url`;
 
 export const ICON_PATH = `${SYSTEM_PATH}/Icons`;
+
+export const BREEZE_ICON_PATH = `${ICON_PATH}/Breeze`;
 
 export const PHOTO_ICON = `${ICON_PATH}/photo.webp`;
 

@@ -1,7 +1,8 @@
 import { type DefaultTheme } from "styled-components";
+import breezeTheme from "styles/breezeTheme";
 import defaultTheme from "styles/defaultTheme";
 
-const themes = { defaultTheme };
+const themes = { breezeTheme, defaultTheme };
 
 export type ThemeName = keyof typeof themes;
 

@@ -1,5 +1,12 @@
 import { memo, useCallback, useRef } from "react";
+import { useTheme } from "styled-components";
 import rndDefaults from "components/system/Window/RndWindow/rndDefaults";
+import {
+  BreezeCloseIcon,
+  BreezeMaximizedIcon,
+  BreezeMaximizeIcon,
+  BreezeMinimizeIcon,
+} from "components/system/Window/Titlebar/BreezeButtons";
 import StyledTitlebar from "components/system/Window/Titlebar/StyledTitlebar";
 import {
   CloseIcon,
@@ -40,6 +47,12 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
   } = process || {};
   const { foregroundId, setForegroundId } = useSession();
   const isForeground = id === foregroundId;
+  const theme = useTheme();
+  const isBreeze = theme.name === "Breeze";
+  const ThemedMinimizeIcon = isBreeze ? BreezeMinimizeIcon : MinimizeIcon;
+  const ThemedMaximizeIcon = isBreeze ? BreezeMaximizeIcon : MaximizeIcon;
+  const ThemedMaximizedIcon = isBreeze ? BreezeMaximizedIcon : MaximizedIcon;
+  const ThemedCloseIcon = isBreeze ? BreezeCloseIcon : CloseIcon;
   const { onClose, onMaximize, onMinimize } = useWindowActions(id);
   const { menu, setMenu } = useMenu();
   const resetMenu = useCallback(
@@ -124,6 +137,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
   return (
     <StyledTitlebar
       $foreground={isForeground}
+      $maximized={maximized}
       className={rndDefaults.dragHandleClassName}
       onDragOver={haltEvent}
       onDrop={haltEvent}
@@ -158,7 +172,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             onClick={triggerMinimize}
             {...label("Minimize")}
           >
-            <MinimizeIcon />
+            <ThemedMinimizeIcon />
           </Button>
         )}
         {!hideMaximizeButton && (
@@ -168,7 +182,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             onClick={onMaximize}
             {...label(maximized ? "Restore Down" : "Maximize")}
           >
-            {maximized ? <MaximizedIcon /> : <MaximizeIcon />}
+            {maximized ? <ThemedMaximizedIcon /> : <ThemedMaximizeIcon />}
           </Button>
         )}
         <Button
@@ -177,7 +191,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
           onClick={onClose}
           {...label("Close")}
         >
-          <CloseIcon />
+          <ThemedCloseIcon />
         </Button>
       </nav>
     </StyledTitlebar>
