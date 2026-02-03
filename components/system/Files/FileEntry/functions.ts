@@ -93,6 +93,11 @@ export const getModifiedTime = (path: string, stats: FileStat): number => {
   return mtimeMs;
 };
 
+const normalizeIconPath = (icon: string): string =>
+  icon.startsWith("/System/Icons/")
+    ? icon.replace("/System/Icons/", `${ICON_PATH}/`)
+    : icon;
+
 export const getIconFromIni = (
   fs: FSModule,
   directory: string
@@ -104,7 +109,11 @@ export const getIconFromIni = (
       if (statError) resolve("");
       else if (stats && isExistingFile(stats)) {
         import("public/.index/iniIcons.json").then(({ default: iniCache }) =>
-          resolve(iniCache[directory as keyof typeof iniCache] || "")
+          resolve(
+            normalizeIconPath(
+              iniCache[directory as keyof typeof iniCache] || ""
+            )
+          )
         );
       } else {
         fs.readFile(iniPath, (readError, contents = Buffer.from("")) => {
@@ -114,7 +123,7 @@ export const getIconFromIni = (
               ShellClassInfo: { IconFile = "" },
             } = ini.parse(contents.toString()) as ShellClassInfo;
 
-            resolve(IconFile);
+            resolve(normalizeIconPath(IconFile));
           }
         });
       }
@@ -170,14 +179,9 @@ export const getShortcutInfo = (
         InternetShortcut: InternetShortcut;
       });
 
-  // Normalize icon path for BASE_PATH support
-  const normalizedIcon = icon.startsWith("/System/Icons/")
-    ? icon.replace("/System/Icons/", `${ICON_PATH}/`)
-    : icon;
-
   return {
     comment,
-    icon: normalizedIcon,
+    icon: normalizeIconPath(icon),
     pid,
     type,
     url,
