@@ -24,6 +24,7 @@ public/Users/Public/**
 !public/Users/Public/Documents/*.md
 !public/Users/Public/Documents/*.pdf
 !public/Users/Public/Music
+!public/Users/Public/Music/*.mp3
 !public/Users/Public/Pictures
 !public/Users/Public/Pictures/prompts.json
 !public/Users/Public/Pictures/slideshow.json
@@ -38,3 +39,4 @@ public/Users/Public/**
 !public/Users/Public/Start Menu/Games/Quake III Arena.url
 !public/Users/Public/Start Menu/Games/Space Cadet.url
 !public/Users/Public/Videos
+!public/Users/Public/Videos/*.mp4
