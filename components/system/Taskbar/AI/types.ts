@@ -1,7 +1,10 @@
 /// <reference types="dom-chromium-ai" />
 
 import { type ChatCompletionMessageParam } from "@mlc-ai/web-llm";
-import { type MarkedOptions } from "components/apps/Marked/useMarked";
+
+type MarkdownIt = {
+  render: (markdownString: string) => string;
+};
 
 declare global {
   /* eslint-disable vars-on-top, no-var  */
@@ -9,9 +12,7 @@ declare global {
     languageModel: AILanguageModelFactory;
     summarizer: AISummarizerFactory;
   };
-  var marked: {
-    parse: (markdownString: string, options: MarkedOptions) => string;
-  };
+  var markdownit: () => MarkdownIt;
   /* eslint-enable vars-on-top, no-var */
   interface Window {
     initialAiPrompt?: string;
