@@ -140,6 +140,82 @@ const StyledMarked = styled.div`
     &.drop {
       ${Message("Drop markdown file here", "#000")};
     }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: #0d1117;
+      color: #e6edf3;
+
+      a {
+        color: #58a6ff;
+      }
+
+      h1,
+      h2 {
+        border-bottom-color: #30363d;
+      }
+
+      nav {
+        background: #161b22;
+        border-color: #30363d;
+
+        .selected {
+          color: #f0f6fc;
+        }
+      }
+
+      table {
+        border-color: #30363d;
+
+        td,
+        th {
+          border-color: #30363d;
+        }
+      }
+
+      pre {
+        background-color: #161b22;
+      }
+
+      code:not([class]) {
+        background-color: rgb(110 118 129 / 40%);
+      }
+
+      &.drop {
+        ${Message("Drop markdown file here", "#e6edf3")};
+      }
+
+      scrollbar-color: rgb(77 77 77) rgb(23 23 23);
+
+      &::-webkit-scrollbar-corner,
+      &::-webkit-scrollbar-track {
+        background-color: rgb(23 23 23);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgb(77 77 77);
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: rgb(122 122 122);
+      }
+
+      &::-webkit-scrollbar-thumb:active {
+        background-color: rgb(166 166 166);
+      }
+
+      &::-webkit-scrollbar-button:single-button {
+        background-color: rgb(23 23 23);
+        border-color: rgb(23 23 23);
+
+        &:hover {
+          background-color: rgb(55 55 55);
+        }
+
+        &:active {
+          background-color: rgb(166 166 166);
+        }
+      }
+    }
   }
 `;
 
