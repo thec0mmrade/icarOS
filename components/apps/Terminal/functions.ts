@@ -32,7 +32,7 @@ export const commands: Record<string, string> = {
   copy: "Copies a file to another location.",
   date: "Displays the date.",
   del: "Deletes a file.",
-  dir: "Displays list of entries in current directory.",
+  dir: "List directory contents. Flags: -a (all), -l (long), -h (human sizes).",
   echo: "Displays messages that are passed to it.",
   exit: "Quits the command interpreter.",
   ffmpeg: "Convert audio or video file to another format.",

@@ -377,10 +377,10 @@ export const TASKBAR_HEIGHT = 30;
 export const PACKAGE_DATA = {
   alias: "daedalOS",
   author: {
-    email: "dustinbrett@gmail.com",
-    name: "Dustin Brett",
-    npub: "npub10uc7hg6wdxhhd7ee8x9c5lr9d0ux7272rv2m0mc03ds54q7quxjss02r3p",
-    url: "https://dustinbrett.com",
+    email: "c0mmrade02@proton.me",
+    name: "Leland Flynn",
+    npub: "placeholder",
+    url: "https://c0mmrade.com",
   },
   description: "Desktop environment in the browser",
   license: "MIT",

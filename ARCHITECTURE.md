@@ -219,12 +219,13 @@ Session data persists to `/session.json` in IndexedDB via the writable OverlayFS
 ```typescript
 type SessionData = {
   // User Preferences
-  themeName: ThemeName;
+  aiEnabled: boolean;
   clockSource: ClockSource;
-  cursor?: string;
-  wallpaperImage: string;
+  cursor: string | undefined;
+  lazySheep?: boolean;
+  themeName: ThemeName;
   wallpaperFit: WallpaperFit;
-  aiEnabled?: boolean;
+  wallpaperImage: string;
 
   // Desktop State
   iconPositions: IconPositions;
@@ -233,8 +234,8 @@ type SessionData = {
   windowStates: WindowStates;
 
   // History
-  runHistory: string[];
   recentFiles: RecentFiles;
+  runHistory: string[];
 };
 ```
 
@@ -270,8 +271,20 @@ The `useSessionAppsLoader` hook opens applications from the default session on p
 // Example: "PDF__/Users/Public/Documents/About.pdf"
 const [app, url] = processId.split(PROCESS_DELIMITER);
 
-// Opens the app with the specified URL
-open(app, { url });
+// Opens the app with the specified URL and optional args
+const { args, delay: windowDelay } = windowStates[processId];
+open(app, { url, ...args });
+```
+
+**WindowState Properties (`contexts/session/types.ts`):**
+
+```typescript
+type WindowState = {
+  args?: Partial<ProcessArguments>;  // App-specific arguments (e.g., { page: 206 })
+  delay?: number;                     // Milliseconds to wait before opening
+  position?: Position;                // Initial window position { x, y }
+  size?: Size;                        // Initial window size { height, width }
+};
 ```
 
 Configure default apps in `public/session.json`:
@@ -279,11 +292,19 @@ Configure default apps in `public/session.json`:
 ```json
 {
   "windowStates": {
-    "PDF__/Users/Public/Documents/About.pdf": {
-      "position": { "x": 50, "y": 50 },
+    "PDF__/Users/Public/Documents/HackersManifesto.pdf": {
+      "delay": 0,
+      "position": { "x": 150, "y": 110 },
+      "size": { "height": 480, "width": 640 }
+    },
+    "PDF__/Users/Public/Documents/Book.pdf": {
+      "args": { "page": 206 },
+      "delay": 200,
+      "position": { "x": 200, "y": 140 },
       "size": { "height": 480, "width": 640 }
     },
     "Browser__https://example.com": {
+      "delay": 400,
       "position": { "x": 100, "y": 100 },
       "size": { "height": 600, "width": 900 }
     }
@@ -296,6 +317,8 @@ The hook:
 - Waits for file system and session to be ready
 - Validates file existence before opening (skips missing files)
 - Supports both local files and URLs (http/https)
+- Supports per-window delays for staggered opening effect
+- Passes optional args to applications (e.g., PDF page number)
 
 ---
 

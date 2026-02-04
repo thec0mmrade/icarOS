@@ -62,6 +62,7 @@ import { transcode } from "utils/ffmpeg";
 import {
   displayVersion,
   getExtension,
+  getFormattedSize,
   getTZOffsetISOString,
   isFileSystemMappingSupported,
   loadFiles,
@@ -377,11 +378,32 @@ const useCommandInterpreter = (
           }
           case "dir":
           case "ls": {
-            const [directory = ""] = commandArgs;
+            // Parse flags (supports -a, -l, -h and combined like -alh)
+            const flags = new Set<string>();
+            const paths: string[] = [];
+
+            for (const arg of commandArgs) {
+              if (arg.startsWith("-") && !arg.startsWith("--")) {
+                for (const char of arg.slice(1)) {
+                  flags.add(char);
+                }
+              } else {
+                paths.push(arg);
+              }
+            }
+
+            const showAll = flags.has("a");
+            const longFormat = flags.has("l");
+            const humanReadable = flags.has("h");
+            const directory = paths[0] || "";
+
+            // ANSI color codes
+            const BLUE = "\u001B[1;34m";
+            const CYAN = "\u001B[1;36m";
+            const GREEN = "\u001B[1;32m";
+            const RESET = "\u001B[0m";
+
             const listDir = async (dirPath: string): Promise<void> => {
-              let totalSize = 0;
-              let fileCount = 0;
-              let directoryCount = 0;
               let entries = await readdir(dirPath);
 
               if (
@@ -392,72 +414,146 @@ const useCommandInterpreter = (
                 entries = await readdir(dirPath);
               }
 
-              const timeFormatter = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
-                timeStyle: "short",
-              });
+              // Filter hidden files unless -a flag
+              if (!showAll) {
+                entries = entries.filter((entry) => !entry.startsWith("."));
+              }
+
+              // Apply wildcard filters
+              entries = entries.filter(
+                (entry) =>
+                  (!directory.startsWith("*") ||
+                    entry.endsWith(directory.slice(1))) &&
+                  (!directory.endsWith("*") ||
+                    entry.startsWith(directory.slice(0, -1)))
+              );
+
+              // Sort entries (directories first, then alphabetically)
               const entriesWithStats = await Promise.all(
-                entries
-                  .filter(
-                    (entry) =>
-                      (!directory.startsWith("*") ||
-                        entry.endsWith(directory.slice(1))) &&
-                      (!directory.endsWith("*") ||
-                        entry.startsWith(directory.slice(0, -1)))
-                  )
-                  .map(async (entry) => {
-                    const filePath = join(dirPath, entry);
-                    const fileStats = await stat(filePath);
-                    const mDate = new Date(
-                      getModifiedTime(filePath, fileStats)
-                    );
-                    const date = getTZOffsetISOString(mDate.getTime()).slice(
-                      0,
-                      10
-                    );
-                    const time = timeFormatter.format(mDate).padStart(8, "0");
+                entries.map(async (entry) => {
+                  const filePath = join(dirPath, entry);
+                  const fileStats = await stat(filePath);
+                  return { entry, filePath, fileStats };
+                })
+              );
+
+              entriesWithStats.sort((a, b) => {
+                const aIsDir = a.fileStats.isDirectory();
+                const bIsDir = b.fileStats.isDirectory();
+                if (aIsDir && !bIsDir) return -1;
+                if (!aIsDir && bIsDir) return 1;
+                return a.entry.localeCompare(b.entry);
+              });
+
+              if (longFormat) {
+                // Long format: -rw-r--r-- 1 user user 1234 Feb  4 10:30 filename
+                const monthNames = [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec",
+                ];
+
+                // Calculate total blocks first
+                const totalBlocks = entriesWithStats.reduce(
+                  (sum, { fileStats }) => sum + Math.ceil(fileStats.size / 4096),
+                  0
+                );
+
+                if (entriesWithStats.length > 0) {
+                  printLn(`total ${totalBlocks}`);
+                }
+
+                for (const { entry, filePath, fileStats } of entriesWithStats) {
+                  const isDirectory = fileStats.isDirectory();
+                  const isExecutable =
+                    entry.endsWith(".exe") ||
+                    entry.endsWith(".sh") ||
+                    entry.endsWith(".wasm");
+                  const isSymlink = entry.endsWith(".url");
+
+                  // Permissions string
+                  const perms = isDirectory ? "drwxr-xr-x" : "-rw-r--r--";
+
+                  // Size
+                  const size = humanReadable
+                    ? getFormattedSize(fileStats.size).padStart(6)
+                    : String(fileStats.size).padStart(8);
+
+                  // Date
+                  const mDate = new Date(
+                    getModifiedTime(filePath, fileStats)
+                  );
+                  const month = monthNames[mDate.getMonth()];
+                  const day = String(mDate.getDate()).padStart(2);
+                  const time = `${String(mDate.getHours()).padStart(2, "0")}:${String(mDate.getMinutes()).padStart(2, "0")}`;
+
+                  // Colorize name
+                  let coloredName = entry;
+                  if (isDirectory) {
+                    coloredName = `${BLUE}${entry}${RESET}`;
+                  } else if (isSymlink) {
+                    coloredName = `${CYAN}${entry}${RESET}`;
+                  } else if (isExecutable) {
+                    coloredName = `${GREEN}${entry}${RESET}`;
+                  }
+
+                  printLn(
+                    `${perms}  1 user user ${size} ${month} ${day} ${time} ${coloredName}`
+                  );
+                }
+              } else {
+                // Simple format: columns of filenames
+                const coloredEntries = entriesWithStats.map(
+                  ({ entry, fileStats }) => {
                     const isDirectory = fileStats.isDirectory();
+                    const isExecutable =
+                      entry.endsWith(".exe") ||
+                      entry.endsWith(".sh") ||
+                      entry.endsWith(".wasm");
+                    const isSymlink = entry.endsWith(".url");
 
-                    totalSize += isDirectory ? 0 : fileStats.size;
                     if (isDirectory) {
-                      directoryCount += 1;
-                    } else {
-                      fileCount += 1;
+                      return `${BLUE}${entry}${RESET}`;
+                    } else if (isSymlink) {
+                      return `${CYAN}${entry}${RESET}`;
+                    } else if (isExecutable) {
+                      return `${GREEN}${entry}${RESET}`;
                     }
+                    return entry;
+                  }
+                );
 
-                    return [
-                      `${date}  ${time}`,
-                      isDirectory
-                        ? "<DIR>        "
-                        : fileStats.size.toLocaleString(),
-                      entry,
-                    ];
-                  })
-              );
-              printLn(` Directory of ${dirPath}`);
-              printLn("");
+                // Calculate column width and display in columns
+                const termWidth = terminal?.cols || 80;
+                const maxLen = Math.max(
+                  ...entriesWithStats.map(({ entry }) => entry.length),
+                  1
+                );
+                const colWidth = maxLen + 2;
+                const numCols = Math.max(1, Math.floor(termWidth / colWidth));
 
-              const fullSizeTerminal =
-                !localEcho?._termSize?.cols || localEcho?._termSize?.cols > 52;
+                let line = "";
+                for (let i = 0; i < coloredEntries.length; i++) {
+                  const entry = entriesWithStats[i].entry;
+                  const coloredEntry = coloredEntries[i];
+                  const padding = " ".repeat(colWidth - entry.length);
+                  line += coloredEntry + padding;
 
-              printTable(
-                [
-                  ["Date", fullSizeTerminal ? 22 : 20],
-                  [
-                    "Type/Size",
-                    fullSizeTerminal ? 15 : 13,
-                    true,
-                    (size) => (size === "-1" ? "" : size),
-                  ],
-                  ["Name", terminal?.cols ? terminal.cols - 40 : 30],
-                ],
-                entriesWithStats,
-                printLn,
-                true
-              );
-              printLn(
-                `\t\t${fileCount} File(s)\t${totalSize.toLocaleString()} bytes`
-              );
-              printLn(`\t\t${directoryCount} Dir(s)${await getFreeSpace()}`);
+                  if ((i + 1) % numCols === 0 || i === coloredEntries.length - 1) {
+                    printLn(line.trimEnd());
+                    line = "";
+                  }
+                }
+              }
             };
 
             if (
@@ -474,7 +570,7 @@ const useCommandInterpreter = (
                   printLn(basename(fullPath));
                 }
               } else {
-                printLn("File Not Found");
+                printLn(`ls: cannot access '${directory}': No such file or directory`);
               }
             } else {
               await listDir(cd.current);
