@@ -62,13 +62,15 @@ ViewportProvider → ProcessProvider → FileSystemProvider → SessionProvider 
 
 ### Key Files
 
-| File                                               | Purpose                          |
-| -------------------------------------------------- | -------------------------------- |
-| `contexts/process/directory.ts`                    | App registry - add new apps here |
-| `contexts/process/useProcessContextState.ts`       | Window/process management        |
-| `contexts/fileSystem/useFileSystemContextState.ts` | File operations                  |
-| `contexts/session/useSessionContextState.ts`       | Session persistence              |
-| `utils/constants.ts`                               | Shared constants                 |
+| File                                               | Purpose                              |
+| -------------------------------------------------- | ------------------------------------ |
+| `contexts/process/directory.ts`                    | App registry - add new apps here     |
+| `contexts/process/useProcessContextState.ts`       | Window/process management            |
+| `contexts/fileSystem/useFileSystemContextState.ts` | File operations                      |
+| `contexts/session/useSessionContextState.ts`       | Session persistence                  |
+| `hooks/useSessionAppsLoader.ts`                    | Opens apps from default session      |
+| `public/session.json`                              | Default session configuration        |
+| `utils/constants.ts`                               | Shared constants                     |
 
 ### File System
 

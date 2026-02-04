@@ -261,6 +261,42 @@ useEffect(
 
 On initialization, attempts to read `/session.json`, falls back to `public/session.json` defaults.
 
+**Default Session Apps (`hooks/useSessionAppsLoader.ts`):**
+
+The `useSessionAppsLoader` hook opens applications from the default session on page load:
+
+```typescript
+// Parses windowStates keys in format: {AppName}__{url}
+// Example: "PDF__/Users/Public/Documents/About.pdf"
+const [app, url] = processId.split(PROCESS_DELIMITER);
+
+// Opens the app with the specified URL
+open(app, { url });
+```
+
+Configure default apps in `public/session.json`:
+
+```json
+{
+  "windowStates": {
+    "PDF__/Users/Public/Documents/About.pdf": {
+      "position": { "x": 50, "y": 50 },
+      "size": { "height": 480, "width": 640 }
+    },
+    "Browser__https://example.com": {
+      "position": { "x": 100, "y": 100 },
+      "size": { "height": 600, "width": 900 }
+    }
+  }
+}
+```
+
+The hook:
+- Runs once on initial load (guarded by ref)
+- Waits for file system and session to be ready
+- Validates file existence before opening (skips missing files)
+- Supports both local files and URLs (http/https)
+
 ---
 
 ## 2. Application Development Guide
@@ -431,13 +467,14 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 
 ### 2.4 Common Hooks
 
-| Hook                  | Purpose                  |
-| --------------------- | ------------------------ |
-| `useProcesses()`      | Access process context   |
-| `useFileSystem()`     | File operations          |
-| `useSession()`        | User session/preferences |
-| `useTitle(id)`        | Manage window title      |
-| `useFileDrop({ id })` | Handle file drops        |
+| Hook                    | Purpose                         |
+| ----------------------- | ------------------------------- |
+| `useProcesses()`        | Access process context          |
+| `useFileSystem()`       | File operations                 |
+| `useSession()`          | User session/preferences        |
+| `useTitle(id)`          | Manage window title             |
+| `useFileDrop({ id })`   | Handle file drops               |
+| `useSessionAppsLoader()`| Open apps from default session  |
 
 ---
 
@@ -784,6 +821,8 @@ NODE_OPTIONS='--openssl-legacy-provider' yarn dev
 | `contexts/process/useProcessContextState.ts`       | Window/process management              |
 | `contexts/fileSystem/useFileSystemContextState.ts` | File system operations                 |
 | `contexts/session/useSessionContextState.ts`       | Session persistence                    |
+| `hooks/useSessionAppsLoader.ts`                    | Opens apps from default session        |
+| `public/session.json`                              | Default session configuration          |
 | `utils/constants.ts`                               | Shared constants                       |
 | `utils/functions.ts`                               | Core utility functions                 |
 | `pages/_app.tsx`                                   | Provider hierarchy                     |
