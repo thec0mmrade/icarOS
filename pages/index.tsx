@@ -5,11 +5,13 @@ import Taskbar from "components/system/Taskbar";
 import useGlobalErrorHandler from "hooks/useGlobalErrorHandler";
 import useGlobalKeyboardShortcuts from "hooks/useGlobalKeyboardShortcuts";
 import useIFrameFocuser from "hooks/useIFrameFocuser";
+import useSessionAppsLoader from "hooks/useSessionAppsLoader";
 import useUrlLoader from "hooks/useUrlLoader";
 
 const Index = (): React.ReactElement => {
   useIFrameFocuser();
   useUrlLoader();
+  useSessionAppsLoader();
   useGlobalKeyboardShortcuts();
   useGlobalErrorHandler();
 
