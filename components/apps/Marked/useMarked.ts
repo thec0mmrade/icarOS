@@ -7,9 +7,8 @@ import { useProcesses } from "contexts/process";
 import { loadFiles } from "utils/functions";
 import { useLinkHandler } from "hooks/useLinkHandler";
 
-export type MarkedOptions = {
-  headerIds: boolean;
-  mangle: boolean;
+type MarkdownIt = {
+  render: (markdownString: string) => string;
 };
 
 declare global {
@@ -17,9 +16,7 @@ declare global {
     DOMPurify: {
       sanitize: (text: string) => string;
     };
-    marked: {
-      parse: (markdownString: string, options: MarkedOptions) => string;
-    };
+    markdownit: () => MarkdownIt;
   }
 }
 
@@ -46,10 +43,7 @@ const useMarked = ({
     if (container instanceof HTMLElement) {
       container.classList.remove("drop");
       container.innerHTML = window.DOMPurify.sanitize(
-        window.marked.parse(markdownFile.toString(), {
-          headerIds: false,
-          mangle: false,
-        })
+        window.markdownit().render(markdownFile.toString())
       );
       container
         .querySelectorAll("a")
@@ -72,7 +66,7 @@ const useMarked = ({
   useEffect(() => {
     if (loading) {
       loadFiles(libs).then(() => {
-        if (window.marked) {
+        if (window.markdownit) {
           setLoading(false);
         }
       });
