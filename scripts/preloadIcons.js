@@ -24,7 +24,7 @@ const ICON_CACHE = `${USER_ICON_PATH}/Cache`;
 const YT_ICON_CACHE = `${ICON_CACHE}/YouTube`;
 const ICON_CACHE_EXTENSION = ".cache";
 
-const VLC_SUBICON = "/System/Icons/16x16/vlc.webp";
+const VIDEO_SUBICON = "/System/Icons/16x16/videos.webp";
 
 const isYouTubeUrl = (url) =>
   url.includes("youtube.com/") || url.includes("youtu.be/");
@@ -54,7 +54,7 @@ const getPublicDirectoryIcons = (directory) => [
         } = parse(readFileSync(join(PUBLIC_DIR, directory, file)).toString());
         const isVideo = pid === "VideoPlayer";
 
-        if (isVideo && url) icons.push(encodeURI(VLC_SUBICON));
+        if (isVideo && url) icons.push(encodeURI(VIDEO_SUBICON));
 
         if (icon) icons.push(encodeURI(icon));
         else {
