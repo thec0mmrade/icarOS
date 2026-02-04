@@ -16,7 +16,7 @@ declare global {
     DOMPurify: {
       sanitize: (text: string) => string;
     };
-    markdownit: () => MarkdownIt;
+    markdownit?: () => MarkdownIt;
   }
 }
 
