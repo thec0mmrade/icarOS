@@ -17,7 +17,6 @@ import {
   autoComplete,
   commands,
   formatToExtension,
-  getFreeSpace,
   getUptime,
   help,
   parseCommand,
@@ -49,7 +48,6 @@ import processDirectory from "contexts/process/directory";
 import { useSession } from "contexts/session";
 import { useProcessesRef } from "hooks/useProcessesRef";
 import {
-  DEFAULT_LOCALE,
   DESKTOP_PATH,
   HIGH_PRIORITY_REQUEST,
   MILLISECONDS_IN_SECOND,
@@ -523,9 +521,11 @@ const useCommandInterpreter = (
 
                     if (isDirectory) {
                       return `${BLUE}${entry}${RESET}`;
-                    } else if (isSymlink) {
+                    }
+                    if (isSymlink) {
                       return `${CYAN}${entry}${RESET}`;
-                    } else if (isExecutable) {
+                    }
+                    if (isExecutable) {
                       return `${GREEN}${entry}${RESET}`;
                     }
                     return entry;
@@ -543,7 +543,7 @@ const useCommandInterpreter = (
 
                 let line = "";
                 for (let i = 0; i < coloredEntries.length; i++) {
-                  const entry = entriesWithStats[i].entry;
+                  const { entry } = entriesWithStats[i];
                   const coloredEntry = coloredEntries[i];
                   const padding = " ".repeat(colWidth - entry.length);
                   line += coloredEntry + padding;
