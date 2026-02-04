@@ -28,8 +28,6 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - name: Build
         run: yarn build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /daedalOS
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
