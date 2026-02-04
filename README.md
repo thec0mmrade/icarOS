@@ -2,12 +2,6 @@
 
 ## _Desktop environment in the browser_
 
-![Screenshot](https://raw.githubusercontent.com/DustinBrett/daedalOS/refs/heads/main/public/screenshot.png?raw=true)
-
-### Feature Overview
-
-[![Feature Overview](https://img.youtube.com/vi/djCqHH0SCmA/mqdefault.jpg)](http://www.youtube.com/watch?v=djCqHH0SCmA)
-
 # System 🧠
 
 ### [File System](https://github.com/jvilk/BrowserFS)
