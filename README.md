@@ -159,6 +159,7 @@
 - Autocomplete & history
 - Pipe commands together
 - Command list via `help`
+- Linux-style `ls` command with flags (`-a`, `-l`, `-h`)
 - [Git support](https://isomorphic-git.org/) (checkout & clone)
 - [Python support](https://pyodide.org/) (**_.py_**)
 - [WebAssembly Package Manager](https://wapm.io/)

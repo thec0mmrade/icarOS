@@ -499,6 +499,49 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 | `useFileDrop({ id })`   | Handle file drops               |
 | `useSessionAppsLoader()`| Open apps from default session  |
 
+### 2.5 Terminal Application
+
+The Terminal (`components/apps/Terminal/`) is a full-featured command-line interface built on xterm.js.
+
+**Key Files:**
+
+| File | Purpose |
+|------|---------|
+| `useTerminal.ts` | xterm.js initialization & lifecycle |
+| `useCommandInterpreter.ts` | Command processing (40+ commands) |
+| `functions.ts` | Parsing, autocomplete, help text |
+| `processGit.ts` | Git operations via isomorphic-git |
+| `python.ts` | Python execution via Pyodide |
+| `js.ts` | JavaScript execution via QuickJS |
+
+**Linux-style `ls` Command:**
+
+The `ls` command supports standard Unix flags:
+
+```bash
+ls              # Column view with colored output
+ls -l           # Long format (permissions, owner, size, date)
+ls -a           # Show hidden files (starting with .)
+ls -h           # Human-readable sizes (1 KB, 2 MB)
+ls -alh         # Combined flags
+```
+
+Output features:
+- Directories displayed in blue
+- Symlinks/shortcuts in cyan
+- Executables (.exe, .sh, .wasm) in green
+- Entries sorted with directories first
+
+**Built-in Command Categories:**
+
+| Category | Examples |
+|----------|----------|
+| File System | `ls`, `cd`, `cp`, `rm`, `mkdir`, `mv`, `cat`, `touch` |
+| System Info | `neofetch`, `whoami`, `date`, `uptime`, `ver` |
+| Process | `ps`, `kill`, `exit` |
+| Code Execution | `python`, `qjs` (QuickJS), `wapm` (WebAssembly) |
+| Network | `weather`, `nslookup`, `ipconfig`, `git` |
+
 ---
 
 ## 3. Build System
