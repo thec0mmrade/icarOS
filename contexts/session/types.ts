@@ -1,6 +1,7 @@
 import { type Position } from "react-rnd";
 import { type SortBy } from "components/system/Files/FileManager/useSortBy";
 import { type Size } from "components/system/Window/RndWindow/useResizable";
+import { type ProcessArguments } from "contexts/process/types";
 import { type ThemeName } from "styles/themes";
 import { type FileManagerViewNames } from "components/system/Files/Views";
 
@@ -13,6 +14,7 @@ declare global {
 export type UpdateFiles = (newFile?: string, oldFile?: string) => Promise<void>;
 
 export type WindowState = {
+  args?: Partial<ProcessArguments>;
   delay?: number;
   position?: Position;
   size?: Size;

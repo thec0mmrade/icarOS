@@ -37,11 +37,11 @@ const useSessionAppsLoader = (): void => {
           const fileExists = isUrl || (await exists(url));
 
           if (fileExists) {
-            const { delay: windowDelay } = windowStates[processId];
+            const { args, delay: windowDelay } = windowStates[processId];
 
             if (windowDelay) await delay(windowDelay);
 
-            open(app, { url });
+            open(app, { url, ...args });
           }
         }
       }
