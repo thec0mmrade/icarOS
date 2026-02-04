@@ -72,7 +72,7 @@ const directory: Processes = {
     },
     icon: `${ICON_PATH}/marked.webp`,
     libs: [
-      `${PROGRAM_FILES_PATH}/Marked/markdown-it.min.js`,
+      `${PROGRAM_FILES_PATH}/Marked/marked.min.js`,
       `${PROGRAM_FILES_PATH}/Marked/purify.min.js`,
     ],
     title: "Marked",
