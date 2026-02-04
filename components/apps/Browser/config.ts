@@ -15,8 +15,13 @@ type WaybackUrlInfo = {
 export const bookmarks: Bookmark[] = [
   {
     icon: FAVICON_BASE_PATH,
-    name: "daedalOS",
-    url: "https://dustinbrett.com/",
+    name: "c0mmrade",
+    url: "https://c0mmrade.com/",
+  },
+  {
+    icon: "https://www.c0mmrade.com/favicon.ico",
+    name: "whoami",
+    url: "https://www.c0mmrade.com/whoami/",
   },
   {
     icon: `${ICON_PATH}/Favicons/dir.webp`,
@@ -44,9 +49,9 @@ export const bookmarks: Bookmark[] = [
     url: "https://skins.webamp.org/",
   },
   {
-    icon: `${ICON_PATH}/Favicons/aos.webp`,
-    name: "AaronOS",
-    url: "https://aaronos.dev/",
+    icon: "https://dallasmakerspace.org/favicon.ico",
+    name: "Dallas Makerspace",
+    url: "https://dallasmakerspace.org/",
   },
 ];
 
