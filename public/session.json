@@ -20,10 +20,10 @@
       "position": { "x": 250, "y": 170 },
       "size": { "height": 400, "width": 500 }
     },
-    "Browser__https://www.c0mmrade.com/research/hunting-the-giant-centipede-rhysida/": {
+    "FileExplorer__/Users/Public": {
       "delay": 800,
-      "position": { "x": 300, "y": 50 },
-      "size": { "height": 600, "width": 900 }
+      "position": { "x": 300, "y": 200 },
+      "size": { "height": 400, "width": 600 }
     }
   }
 }
