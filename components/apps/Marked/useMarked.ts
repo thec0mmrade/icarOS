@@ -43,7 +43,7 @@ const useMarked = ({
     if (container instanceof HTMLElement) {
       container.classList.remove("drop");
       container.innerHTML = window.DOMPurify.sanitize(
-        window.markdownit().render(markdownFile.toString())
+        window.markdownit?.().render(markdownFile.toString()) ?? ""
       );
       container
         .querySelectorAll("a")
