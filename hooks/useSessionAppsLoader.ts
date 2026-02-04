@@ -24,6 +24,11 @@ const useSessionAppsLoader = (): void => {
     loadedSessionAppsRef.current = true;
 
     const openSessionApps = async (): Promise<void> => {
+      const delay = (ms: number): Promise<void> =>
+        new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+
       for (const processId of Object.keys(windowStates)) {
         const [app, url] = processId.split(PROCESS_DELIMITER);
 
@@ -32,6 +37,10 @@ const useSessionAppsLoader = (): void => {
           const fileExists = isUrl || (await exists(url));
 
           if (fileExists) {
+            const { delay: windowDelay } = windowStates[processId];
+
+            if (windowDelay) await delay(windowDelay);
+
             open(app, { url });
           }
         }
