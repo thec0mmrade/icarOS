@@ -174,17 +174,19 @@ const useTerminal = ({
       localEcho.println(`By ${author.name}. ${displayLicense}.`);
 
       const bannerCommand = `echo "${BANNER}" | lolcat`;
-      processCommand.current(bannerCommand).then(() => {
-        if (initialCommand) {
-          localEcho.println(
-            `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
-          );
-          localEcho.history.entries = [initialCommand];
-          processCommand.current(initialCommand).then(prompt);
-        } else {
-          prompt();
-        }
-      });
+      setTimeout(() => {
+        processCommand.current(bannerCommand).then(() => {
+          if (initialCommand) {
+            localEcho.println(
+              `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
+            );
+            localEcho.history.entries = [initialCommand];
+            processCommand.current(initialCommand).then(prompt);
+          } else {
+            prompt();
+          }
+        });
+      }, 100);
 
       setPrompted(true);
       terminal.focus();
