@@ -41,9 +41,34 @@ const { alias, author, license } = PACKAGE_DATA;
 
 export const displayLicense = `${license} License`;
 
-const BANNER = ` ░█▀▀░▄▀▄░█▄█░█▄█░█▀▄░█▀█░█▀▄░█▀▀
- ░█░░░█/█░█░█░█░█░█▀▄░█▀█░█░█░█▀▀
- ░▀▀▀░░▀░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀`;
+const BANNER_LINES = [
+  " ░█▀▀░▄▀▄░█▄█░█▄█░█▀▄░█▀█░█▀▄░█▀▀",
+  " ░█░░░█/█░█░█░█░█░█▀▄░█▀█░█░█░█▀▀",
+  " ░▀▀▀░░▀░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀",
+];
+
+const RESET = "\u001B[0m";
+
+const rainbowText = (text: string, lineOffset = 0): string => {
+  const colors = [
+    [255, 0, 0],
+    [255, 127, 0],
+    [255, 255, 0],
+    [0, 255, 0],
+    [0, 255, 255],
+    [0, 127, 255],
+    [139, 0, 255],
+  ];
+  return (
+    [...text]
+      .map((char, i) => {
+        const colorIndex = (i + lineOffset * 3) % colors.length;
+        const [r, g, b] = colors[colorIndex];
+        return `\u001B[38;2;${r};${g};${b}m${char}`;
+      })
+      .join("") + RESET
+  );
+};
 
 const formatPrompt = (path: string): string => {
   const displayPath = path === HOME ? "~" : path.replace(HOME, "~");
@@ -173,20 +198,19 @@ const useTerminal = ({
       localEcho.println(`${alias} [Version ${displayVersion()}]`);
       localEcho.println(`By ${author.name}. ${displayLicense}.`);
 
-      const bannerCommand = `echo "${BANNER}" | lolcat`;
-      setTimeout(() => {
-        processCommand.current(bannerCommand).then(() => {
-          if (initialCommand) {
-            localEcho.println(
-              `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
-            );
-            localEcho.history.entries = [initialCommand];
-            processCommand.current(initialCommand).then(prompt);
-          } else {
-            prompt();
-          }
-        });
-      }, 100);
+      BANNER_LINES.forEach((line, index) => {
+        localEcho.println(rainbowText(line, index));
+      });
+
+      if (initialCommand) {
+        localEcho.println(
+          `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
+        );
+        localEcho.history.entries = [initialCommand];
+        processCommand.current(initialCommand).then(prompt);
+      } else {
+        prompt();
+      }
 
       setPrompted(true);
       terminal.focus();
