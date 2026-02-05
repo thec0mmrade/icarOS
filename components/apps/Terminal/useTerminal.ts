@@ -41,6 +41,10 @@ const { alias, author, license } = PACKAGE_DATA;
 
 export const displayLicense = `${license} License`;
 
+const BANNER = ` ░█▀▀░▄▀▄░█▄█░█▄█░█▀▄░█▀█░█▀▄░█▀▀
+ ░█░░░█/█░█░█░█░█░█▀▄░█▀█░█░█░█▀▀
+ ░▀▀▀░░▀░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀`;
+
 const formatPrompt = (path: string): string => {
   const displayPath = path === HOME ? "~" : path.replace(HOME, "~");
   return `${TERMINAL_USER}@${TERMINAL_HOST}:${displayPath}${PROMPT_CHARACTER}`;
@@ -169,15 +173,18 @@ const useTerminal = ({
       localEcho.println(`${alias} [Version ${displayVersion()}]`);
       localEcho.println(`By ${author.name}. ${displayLicense}.`);
 
-      if (initialCommand) {
-        localEcho.println(
-          `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
-        );
-        localEcho.history.entries = [initialCommand];
-        processCommand.current(initialCommand).then(prompt);
-      } else {
-        prompt();
-      }
+      const bannerCommand = `echo "${BANNER}" | lolcat`;
+      processCommand.current(bannerCommand).then(() => {
+        if (initialCommand) {
+          localEcho.println(
+            `\r\n${formatPrompt(cd.current)}${initialCommand}\r\n`
+          );
+          localEcho.history.entries = [initialCommand];
+          processCommand.current(initialCommand).then(prompt);
+        } else {
+          prompt();
+        }
+      });
 
       setPrompted(true);
       terminal.focus();
