@@ -47,29 +47,6 @@ const BANNER_LINES = [
   " ░▀▀▀░░▀░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀",
 ];
 
-const RESET = "\u001B[0m";
-
-const rainbowText = (text: string, lineOffset = 0): string => {
-  const colors = [
-    [255, 0, 0],
-    [255, 127, 0],
-    [255, 255, 0],
-    [0, 255, 0],
-    [0, 255, 255],
-    [0, 127, 255],
-    [139, 0, 255],
-  ];
-  return (
-    [...text]
-      .map((char, i) => {
-        const colorIndex = (i + lineOffset * 3) % colors.length;
-        const [r, g, b] = colors[colorIndex];
-        return `\u001B[38;2;${r};${g};${b}m${char}`;
-      })
-      .join("") + RESET
-  );
-};
-
 const formatPrompt = (path: string): string => {
   const displayPath = path === HOME ? "~" : path.replace(HOME, "~");
   return `${TERMINAL_USER}@${TERMINAL_HOST}:${displayPath}${PROMPT_CHARACTER}`;
@@ -198,8 +175,8 @@ const useTerminal = ({
       localEcho.println(`${alias} [Version ${displayVersion()}]`);
       localEcho.println(`By ${author.name}. ${displayLicense}.`);
 
-      BANNER_LINES.forEach((line, index) => {
-        localEcho.println(rainbowText(line, index));
+      BANNER_LINES.forEach((line) => {
+        localEcho.println(line);
       });
 
       if (initialCommand) {
