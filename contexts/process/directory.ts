@@ -229,6 +229,24 @@ const directory: Processes = {
     lockAspectRatio: true,
     title: "Space Cadet",
   },
+  SprocketGreeting: {
+    Component: dynamic(
+      () => import("components/system/Dialogs/SprocketGreeting")
+    ),
+    allowResizing: false,
+    backgroundColor: "#1a1a2e",
+    defaultSize: {
+      height: 480,
+      width: 520,
+    },
+    dialogProcess: true,
+    hideMaximizeButton: true,
+    hideMinimizeButton: true,
+    hideTaskbarEntry: true,
+    icon: `${ICON_PATH}/user.webp`,
+    singleton: true,
+    title: "Welcome!",
+  },
   StableDiffusion: {
     Component: dynamic(() => import("components/apps/StableDiffusion")),
     backgroundColor: "rgb(235, 251, 247)",

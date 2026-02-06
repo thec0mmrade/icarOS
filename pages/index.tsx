@@ -4,6 +4,7 @@ import Desktop from "components/system/Desktop";
 import Taskbar from "components/system/Taskbar";
 import useGlobalErrorHandler from "hooks/useGlobalErrorHandler";
 import useGlobalKeyboardShortcuts from "hooks/useGlobalKeyboardShortcuts";
+import useGreetingLoader from "hooks/useGreetingLoader";
 import useIFrameFocuser from "hooks/useIFrameFocuser";
 import useSessionAppsLoader from "hooks/useSessionAppsLoader";
 import useUrlLoader from "hooks/useUrlLoader";
@@ -12,6 +13,7 @@ const Index = (): React.ReactElement => {
   useIFrameFocuser();
   useUrlLoader();
   useSessionAppsLoader();
+  useGreetingLoader();
   useGlobalKeyboardShortcuts();
   useGlobalErrorHandler();
 
