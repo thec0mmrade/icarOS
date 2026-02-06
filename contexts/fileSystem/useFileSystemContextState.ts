@@ -477,6 +477,13 @@ const useFileSystemContextState = (): FileSystemContextState => {
         throw new Error("S3 credentials not found");
       }
 
+      // Ensure /S3 directory exists
+      const s3RootExists = await exists(S3_MOUNT_ROOT);
+
+      if (!s3RootExists) {
+        await mkdir(S3_MOUNT_ROOT);
+      }
+
       const { default: S3FileSystem } = await import(
         "contexts/fileSystem/backends/S3FileSystem"
       );
@@ -509,7 +516,7 @@ const useFileSystemContextState = (): FileSystemContextState => {
         );
       });
     },
-    [rootFs, updateFolder]
+    [exists, mkdir, rootFs, updateFolder]
   );
   const unMountS3 = useCallback(
     (connectionName: string): void => {
