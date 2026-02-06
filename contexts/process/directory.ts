@@ -206,6 +206,21 @@ const directory: Processes = {
     singleton: true,
     title: "Run",
   },
+  S3Connection: {
+    Component: dynamic(() => import("components/system/Dialogs/S3Connection")),
+    allowResizing: false,
+    backgroundColor: "#F0F0F0",
+    defaultSize: {
+      height: 480,
+      width: 420,
+    },
+    dialogProcess: true,
+    hideMaximizeButton: true,
+    hideMinimizeButton: true,
+    icon: `${ICON_PATH}/folder-cloud.webp`,
+    singleton: true,
+    title: "S3 Storage",
+  },
   ScreenSaver: {
     Component: dynamic(() => import("components/system/Dialogs/ScreenSaver")),
     allowResizing: false,

@@ -33,12 +33,13 @@ import useAsyncFs, {
   type RootFileSystem,
 } from "contexts/fileSystem/useAsyncFs";
 import { useProcesses } from "contexts/process";
-import { type UpdateFiles } from "contexts/session/types";
+import { type S3Connection, type UpdateFiles } from "contexts/session/types";
 import {
   CLIPBOARD_FILE_EXTENSIONS,
   DEFAULT_MAPPED_NAME,
   DESKTOP_PATH,
   PROCESS_DELIMITER,
+  S3_MOUNT_ROOT,
   TRANSITIONS_IN_MILLISECONDS,
 } from "utils/constants";
 import { bufferToBlob, getExtension, getMimeType } from "utils/functions";
@@ -110,6 +111,7 @@ type FileSystemContextState = AsyncFS & {
     url: string,
     baseUrl?: string
   ) => Promise<void>;
+  mountS3: (connection: S3Connection) => Promise<string>;
   moveEntries: (entries: string[]) => void;
   pasteList: FilePasteOperations;
   removeFsWatcher: (folder: string, updateFiles: UpdateFiles) => void;
@@ -117,6 +119,7 @@ type FileSystemContextState = AsyncFS & {
   setPasteList: React.Dispatch<React.SetStateAction<FilePasteOperations>>;
   unMapFs: (directory: string, hasNoHandle?: boolean) => Promise<void>;
   unMountFs: (url: string) => void;
+  unMountS3: (connectionId: string) => void;
   updateFolder: (
     folder: string,
     newFile?: string,
@@ -465,6 +468,58 @@ const useFileSystemContextState = (): FileSystemContextState => {
     (url: string): void => rootFs?.umount?.(url),
     [rootFs]
   );
+  const mountS3 = useCallback(
+    async (connection: S3Connection): Promise<string> => {
+      const { getS3Credentials } = await import("utils/s3/credentials");
+      const credentials = getS3Credentials(connection.id);
+
+      if (!credentials) {
+        throw new Error("S3 credentials not found");
+      }
+
+      const { default: S3FileSystem } = await import(
+        "contexts/fileSystem/backends/S3FileSystem"
+      );
+
+      return new Promise((resolve, reject) => {
+        S3FileSystem.Create(
+          {
+            accessKeyId: credentials.accessKeyId,
+            bucket: connection.bucket,
+            endpoint: connection.endpoint,
+            region: connection.region,
+            secretAccessKey: credentials.secretAccessKey,
+          },
+          (error, s3Fs) => {
+            if (error || !s3Fs) {
+              reject(error ?? new Error("Failed to create S3 file system"));
+              return;
+            }
+
+            const mountPath = join(S3_MOUNT_ROOT, connection.name);
+
+            try {
+              rootFs?.mount?.(mountPath, s3Fs as unknown as FileSystem);
+              updateFolder(S3_MOUNT_ROOT, connection.name);
+              resolve(mountPath);
+            } catch (mountError) {
+              reject(mountError as Error);
+            }
+          }
+        );
+      });
+    },
+    [rootFs, updateFolder]
+  );
+  const unMountS3 = useCallback(
+    (connectionName: string): void => {
+      const mountPath = join(S3_MOUNT_ROOT, connectionName);
+
+      rootFs?.umount?.(mountPath);
+      updateFolder(S3_MOUNT_ROOT, undefined, connectionName);
+    },
+    [rootFs, updateFolder]
+  );
   const unMapFs = useCallback(
     async (directory: string, hasNoHandle?: boolean): Promise<void> => {
       unMountFs(directory);
@@ -700,12 +755,14 @@ const useFileSystemContextState = (): FileSystemContextState => {
     mountEmscriptenFs,
     mountFs,
     mountHttpRequestFs,
+    mountS3,
     moveEntries,
     pasteList,
     removeFsWatcher,
     setPasteList,
     unMapFs,
     unMountFs,
+    unMountS3,
     updateFolder,
     ...asyncFs,
   };

@@ -34,6 +34,15 @@ export type ClockSource = "local" | "ntp";
 
 export type RecentFiles = [string, string, string][];
 
+export type S3Connection = {
+  bucket: string;
+  endpoint: string;
+  id: string;
+  name: string;
+  provider: "aws" | "custom" | "minio" | "storj";
+  region?: string;
+};
+
 export type IconPosition = {
   gridColumnStart: number;
   gridRowStart: number;
@@ -49,6 +58,7 @@ export type SessionData = {
   lazySheep?: boolean;
   recentFiles: RecentFiles;
   runHistory: string[];
+  s3Connections?: S3Connection[];
   sortOrders: SortOrders;
   themeName: ThemeName;
   views: Views;
@@ -69,6 +79,7 @@ export type SessionContextState = SessionData & {
   setHaltSession: React.Dispatch<React.SetStateAction<boolean>>;
   setIconPositions: React.Dispatch<React.SetStateAction<IconPositions>>;
   setRunHistory: React.Dispatch<React.SetStateAction<string[]>>;
+  setS3Connections: React.Dispatch<React.SetStateAction<S3Connection[]>>;
   setSortOrder: (
     directory: string,
     order: string[] | ((currentSortOrder: string[]) => string[]),

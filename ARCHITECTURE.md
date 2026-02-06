@@ -209,6 +209,25 @@ Supports mounting additional file systems:
 | `mapFs(directory, handle?)`           | Map native directory via File System Access API |
 | `mountEmscriptenFs(FS)`               | Mount Emscripten app storage                    |
 | `mountHttpRequestFs(mountPoint, url)` | Mount remote HTTP file index                    |
+| `mountS3(connection)`                 | Mount S3-compatible cloud storage bucket        |
+
+**S3 Storage:**
+
+S3-compatible storage (AWS S3, Storj, MinIO, etc.) can be mounted via the S3 Connection dialog:
+
+- Open via Run dialog (Win+R, type "s3") or desktop shortcut
+- Supports provider presets: Storj, AWS S3, MinIO, Custom
+- Credentials stored securely in localStorage
+- Buckets mount at `/S3/{connection-name}`
+- Connections persist across sessions and auto-mount on reload
+
+Key files:
+
+- `utils/s3/index.ts` - S3 client operations
+- `utils/s3/credentials.ts` - Credential storage
+- `contexts/fileSystem/backends/S3FileSystem.ts` - BrowserFS backend
+- `components/system/Dialogs/S3Connection/` - Connection management UI
+- `hooks/useS3ConnectionLoader.ts` - Auto-mount on session load
 
 ### 1.5 Session Persistence
 
@@ -236,6 +255,9 @@ type SessionData = {
   // History
   recentFiles: RecentFiles;
   runHistory: string[];
+
+  // Cloud Storage
+  s3Connections?: S3Connection[];
 };
 ```
 
@@ -280,10 +302,10 @@ open(app, { url, ...args });
 
 ```typescript
 type WindowState = {
-  args?: Partial<ProcessArguments>;  // App-specific arguments (e.g., { page: 206 })
-  delay?: number;                     // Milliseconds to wait before opening
-  position?: Position;                // Initial window position { x, y }
-  size?: Size;                        // Initial window size { height, width }
+  args?: Partial<ProcessArguments>; // App-specific arguments (e.g., { page: 206 })
+  delay?: number; // Milliseconds to wait before opening
+  position?: Position; // Initial window position { x, y }
+  size?: Size; // Initial window size { height, width }
 };
 ```
 
@@ -313,6 +335,7 @@ Configure default apps in `public/session.json`:
 ```
 
 The hook:
+
 - Runs once on initial load (guarded by ref)
 - Waits for file system and session to be ready
 - Validates file existence before opening (skips missing files)
@@ -490,14 +513,14 @@ const Paint: FC<ComponentProcessProps> = ({ id }) => {
 
 ### 2.4 Common Hooks
 
-| Hook                    | Purpose                         |
-| ----------------------- | ------------------------------- |
-| `useProcesses()`        | Access process context          |
-| `useFileSystem()`       | File operations                 |
-| `useSession()`          | User session/preferences        |
-| `useTitle(id)`          | Manage window title             |
-| `useFileDrop({ id })`   | Handle file drops               |
-| `useSessionAppsLoader()`| Open apps from default session  |
+| Hook                     | Purpose                        |
+| ------------------------ | ------------------------------ |
+| `useProcesses()`         | Access process context         |
+| `useFileSystem()`        | File operations                |
+| `useSession()`           | User session/preferences       |
+| `useTitle(id)`           | Manage window title            |
+| `useFileDrop({ id })`    | Handle file drops              |
+| `useSessionAppsLoader()` | Open apps from default session |
 
 ### 2.5 Terminal Application
 
@@ -505,14 +528,14 @@ The Terminal (`components/apps/Terminal/`) is a full-featured command-line inter
 
 **Key Files:**
 
-| File | Purpose |
-|------|---------|
-| `useTerminal.ts` | xterm.js initialization & lifecycle |
-| `useCommandInterpreter.ts` | Command processing (40+ commands) |
-| `functions.ts` | Parsing, autocomplete, help text |
-| `processGit.ts` | Git operations via isomorphic-git |
-| `python.ts` | Python execution via Pyodide |
-| `js.ts` | JavaScript execution via QuickJS |
+| File                       | Purpose                             |
+| -------------------------- | ----------------------------------- |
+| `useTerminal.ts`           | xterm.js initialization & lifecycle |
+| `useCommandInterpreter.ts` | Command processing (40+ commands)   |
+| `functions.ts`             | Parsing, autocomplete, help text    |
+| `processGit.ts`            | Git operations via isomorphic-git   |
+| `python.ts`                | Python execution via Pyodide        |
+| `js.ts`                    | JavaScript execution via QuickJS    |
 
 **Linux-style `ls` Command:**
 
@@ -527,6 +550,7 @@ ls -alh         # Combined flags
 ```
 
 Output features:
+
 - Directories displayed in blue
 - Symlinks/shortcuts in cyan
 - Executables (.exe, .sh, .wasm) in green
@@ -534,13 +558,13 @@ Output features:
 
 **Built-in Command Categories:**
 
-| Category | Examples |
-|----------|----------|
-| File System | `ls`, `cd`, `cp`, `rm`, `mkdir`, `mv`, `cat`, `touch` |
-| System Info | `neofetch`, `whoami`, `date`, `uptime`, `ver` |
-| Process | `ps`, `kill`, `exit` |
-| Code Execution | `python`, `qjs` (QuickJS), `wapm` (WebAssembly) |
-| Network | `weather`, `nslookup`, `ipconfig`, `git` |
+| Category       | Examples                                              |
+| -------------- | ----------------------------------------------------- |
+| File System    | `ls`, `cd`, `cp`, `rm`, `mkdir`, `mv`, `cat`, `touch` |
+| System Info    | `neofetch`, `whoami`, `date`, `uptime`, `ver`         |
+| Process        | `ps`, `kill`, `exit`                                  |
+| Code Execution | `python`, `qjs` (QuickJS), `wapm` (WebAssembly)       |
+| Network        | `weather`, `nslookup`, `ipconfig`, `git`              |
 
 ---
 

@@ -62,21 +62,22 @@ ViewportProvider → ProcessProvider → FileSystemProvider → SessionProvider 
 
 ### Key Files
 
-| File                                               | Purpose                              |
-| -------------------------------------------------- | ------------------------------------ |
-| `contexts/process/directory.ts`                    | App registry - add new apps here     |
-| `contexts/process/useProcessContextState.ts`       | Window/process management            |
-| `contexts/fileSystem/useFileSystemContextState.ts` | File operations                      |
-| `contexts/session/useSessionContextState.ts`       | Session persistence                  |
-| `hooks/useSessionAppsLoader.ts`                    | Opens apps from default session      |
-| `public/session.json`                              | Default session configuration        |
-| `utils/constants.ts`                               | Shared constants                     |
+| File                                               | Purpose                          |
+| -------------------------------------------------- | -------------------------------- |
+| `contexts/process/directory.ts`                    | App registry - add new apps here |
+| `contexts/process/useProcessContextState.ts`       | Window/process management        |
+| `contexts/fileSystem/useFileSystemContextState.ts` | File operations                  |
+| `contexts/session/useSessionContextState.ts`       | Session persistence              |
+| `hooks/useSessionAppsLoader.ts`                    | Opens apps from default session  |
+| `public/session.json`                              | Default session configuration    |
+| `utils/constants.ts`                               | Shared constants                 |
 
 ### File System
 
 - Uses BrowserFS with OverlayFS (HTTPRequest readable + IndexedDB writable)
 - Static file index generated at build time via `yarn build:fs:public`
 - Session persists to `/session.json`
+- S3-compatible storage can be mounted via S3 Connection dialog (Run: "s3")
 
 ### Window Management
 

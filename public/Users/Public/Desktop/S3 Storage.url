@@ -1,0 +1,5 @@
+[InternetShortcut]
+BaseURL=S3Connection
+Comment=Manage S3-compatible cloud storage connections.
+IconFile=/System/Icons/folder-cloud.webp
+Type=System

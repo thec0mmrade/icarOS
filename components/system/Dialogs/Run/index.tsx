@@ -34,6 +34,8 @@ export const resourceAliasMap: Record<string, string> = {
   explorer: "FileExplorer",
   monaco: "MonacoEditor",
   mspaint: "Paint",
+  s3: "S3Connection",
+  storage: "S3Connection",
   vlc: "VideoPlayer",
 };
 

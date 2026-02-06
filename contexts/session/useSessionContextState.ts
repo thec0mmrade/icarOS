@@ -13,6 +13,7 @@ import {
   type Views,
   type IconPositions,
   type RecentFiles,
+  type S3Connection,
   type SessionContextState,
   type SessionData,
   type SortOrders,
@@ -75,6 +76,7 @@ const useSessionContextState = (): SessionContextState => {
   const [wallpaperImage, setWallpaperImage] = useState(DEFAULT_WALLPAPER);
   const [runHistory, setRunHistory] = useState<string[]>([]);
   const [recentFiles, setRecentFiles] = useState<RecentFiles>([]);
+  const [s3Connections, setS3Connections] = useState<S3Connection[]>([]);
   const updateRecentFiles = useCallback(
     async (url: string, pid: string, title?: string): Promise<void> => {
       const ext = getExtension(url);
@@ -221,6 +223,7 @@ const useSessionContextState = (): SessionContextState => {
             lazySheep,
             recentFiles,
             runHistory,
+            s3Connections,
             sortOrders,
             themeName,
             views,
@@ -241,6 +244,7 @@ const useSessionContextState = (): SessionContextState => {
     lazySheep,
     recentFiles,
     runHistory,
+    s3Connections,
     sessionLoaded,
     sortOrders,
     themeName,
@@ -357,6 +361,9 @@ const useSessionContextState = (): SessionContextState => {
           } else if (!Array.isArray(session.recentFiles)) {
             setRecentFiles(DEFAULT_SESSION?.recentFiles || []);
           }
+          if (session.s3Connections && session.s3Connections.length > 0) {
+            setS3Connections(session.s3Connections);
+          }
           if (session.lazySheep) {
             setLazySheep(session.lazySheep);
 
@@ -396,6 +403,7 @@ const useSessionContextState = (): SessionContextState => {
     recentFiles,
     removeFromStack,
     runHistory,
+    s3Connections,
     sessionLoaded,
     setAiEnabled,
     setClockSource,
@@ -404,6 +412,7 @@ const useSessionContextState = (): SessionContextState => {
     setHaltSession,
     setIconPositions: setAndUpdateIconPositions,
     setRunHistory,
+    setS3Connections,
     setSortOrder,
     setThemeName,
     setViews,
