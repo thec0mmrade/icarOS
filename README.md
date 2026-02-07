@@ -1,4 +1,4 @@
-## 🌌 **daedalOS** 🌌
+## 🌌 **icarOS** 🌌
 
 ## _Desktop environment in the browser_
 
@@ -235,8 +235,8 @@ yarn serve
 ##### Docker
 
 ```
-docker build -t daedalos .
-docker run -dp 3000:3000 --rm --name daedalos daedalos
+docker build -t icaros .
+docker run -dp 3000:3000 --rm --name icaros icaros
 ```
 
 ##### Notes

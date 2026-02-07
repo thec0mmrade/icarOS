@@ -1,6 +1,6 @@
-# daedalOS Architecture Documentation
+# icarOS Architecture Documentation
 
-This document provides comprehensive technical documentation for daedalOS, a browser-based desktop environment built with React/Next.js.
+This document provides comprehensive technical documentation for icarOS, a browser-based desktop environment built with React/Next.js.
 
 ---
 
@@ -19,7 +19,7 @@ This document provides comprehensive technical documentation for daedalOS, a bro
 
 ### 1.1 Context System
 
-daedalOS uses a **Context Factory** pattern to create React contexts with memoized providers. This pattern is implemented in `contexts/contextFactory.tsx`:
+icarOS uses a **Context Factory** pattern to create React contexts with memoized providers. This pattern is implemented in `contexts/contextFactory.tsx`:
 
 ```typescript
 const contextFactory = <T,>(

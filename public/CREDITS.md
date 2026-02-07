@@ -2,7 +2,7 @@
 
 ## Creator
 
-- [Dustin Brett](https://dustinbrett.com) - Original creator of daedalOS
+- [Dustin Brett](https://dustinbrett.com) - Original creator of daedalOS (now icarOS)
 
 ---
 

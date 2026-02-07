@@ -1,6 +1,6 @@
 # Breeze Icons
 
-This directory contains KDE Breeze-style icons for the daedalOS Breeze theme.
+This directory contains KDE Breeze-style icons for the icarOS Breeze theme.
 
 ## Directory Structure
 

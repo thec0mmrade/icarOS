@@ -27,7 +27,7 @@ export const PROMPT_CHARACTER = "$";
 
 export const TERMINAL_USER = "user";
 
-export const TERMINAL_HOST = "daedalOS";
+export const TERMINAL_HOST = "icarOS";
 
 export const PI_ASCII = [
   "     ':lodxkkkOOOOOOOOOOOOkkkkkl",

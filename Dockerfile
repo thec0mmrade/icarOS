@@ -2,7 +2,7 @@ FROM node:22-alpine
 
 RUN apk add --no-cache git
 
-WORKDIR daedalOS
+WORKDIR icarOS
 COPY . .
 
 RUN yarn
