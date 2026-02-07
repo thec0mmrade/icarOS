@@ -76,6 +76,8 @@ export const PROXIES: Record<
 > = {
   ALL_ORIGINS: (url) => `https://api.allorigins.win/raw?url=${url}`,
   CORS: undefined,
+  CORS_IO: (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  CORS_LOL: (url) => `https://api.cors.lol/?url=${encodeURIComponent(url)}`,
   WAYBACK_MACHINE: async (url) => {
     try {
       const urlInfoResponse = await fetch(`${WAYBACK_URL_INFO}${url}`);

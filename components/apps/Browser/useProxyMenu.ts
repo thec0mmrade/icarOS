@@ -6,6 +6,8 @@ import { type ContextMenuCapture } from "contexts/menu/useMenuContextState";
 export type ProxyState =
   | "ALL_ORIGINS"
   | "CORS"
+  | "CORS_IO"
+  | "CORS_LOL"
   | `OLD_NET_${number}`
   | "WAYBACK_MACHINE";
 
@@ -27,6 +29,16 @@ const useProxyMenu = (
           action: () => setProxyState("CORS"),
           label: "Local w/CORS",
           toggle: proxyState === "CORS",
+        },
+        {
+          action: () => setProxyState("CORS_IO"),
+          label: "corsproxy.io",
+          toggle: proxyState === "CORS_IO",
+        },
+        {
+          action: () => setProxyState("CORS_LOL"),
+          label: "CORS.lol",
+          toggle: proxyState === "CORS_LOL",
         },
         {
           action: () => setProxyState("WAYBACK_MACHINE"),
