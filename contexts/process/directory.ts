@@ -63,6 +63,16 @@ const directory: Processes = {
     icon: FOLDER_ICON,
     title: "File Explorer",
   },
+  HexEdit: {
+    Component: dynamic(() => import("components/apps/HexEdit")),
+    backgroundColor: "#1a1a1a",
+    defaultSize: {
+      height: 480,
+      width: 640,
+    },
+    icon: `${ICON_PATH}/executable.webp`,
+    title: "HexEdit",
+  },
   Marked: {
     Component: dynamic(() => import("components/apps/Marked")),
     backgroundColor: "#FFF",
