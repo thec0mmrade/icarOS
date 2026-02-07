@@ -6,7 +6,7 @@ import useInteractiveMode from "components/system/Clippy/useInteractiveMode";
 import ClippyStyles from "components/system/Clippy/StyledClippy";
 
 type ClippyAgentType = {
-  hide: (fast: boolean, callback?: () => void) => void;
+  hide: (fast: boolean, callback: () => void) => void;
   play: (animation: string, timeout?: number, callback?: () => void) => boolean;
   show: (fast: boolean) => boolean | undefined;
   speak: (text: string, hold: boolean) => void;
@@ -46,8 +46,7 @@ const ClippyWrapper: FC = () => {
             loadedAgent.show(false);
             setAgent(loadedAgent);
           } else {
-            loadedAgent.hide(true);
-            cleanupClippyDOM();
+            loadedAgent.hide(true, () => cleanupClippyDOM());
           }
           loadingRef.current = false;
         },
@@ -71,16 +70,20 @@ const ClippyWrapper: FC = () => {
 
   useEffect(() => {
     if (!clippyEnabled && agent) {
-      agent.hide(true);
-      cleanupClippyDOM();
-      setAgent(undefined);
+      agent.hide(true, () => {
+        cleanupClippyDOM();
+        setAgent(undefined);
+      });
     }
   }, [agent, clippyEnabled]);
 
   useEffect(() => cleanupClippyDOM, []);
 
-  useAmbientMode(agent, clippyEnabled && clippyMode === "ambient");
-  useInteractiveMode(agent, clippyEnabled && clippyMode === "interactive");
+  useAmbientMode(agent, Boolean(clippyEnabled) && clippyMode === "ambient");
+  useInteractiveMode(
+    agent,
+    Boolean(clippyEnabled) && clippyMode === "interactive"
+  );
 
   // eslint-disable-next-line unicorn/no-null
   if (!clippyEnabled) return null;
