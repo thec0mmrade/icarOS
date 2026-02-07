@@ -48,6 +48,7 @@
     "@monaco-editor/loader": "1.5.0",
     "@panzoom/panzoom": "^4.6.0",
     "@prettier/plugin-xml": "^3.4.2",
+    "@react95/clippy": "^2.0.2",
     "@wasmer/wasm-transformer": "^0.12.0",
     "ani-cursor": "^0.0.5",
     "browserfs": "https://github.com/jvilk/BrowserFS.git#a96aa2d",

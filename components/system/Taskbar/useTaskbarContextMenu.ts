@@ -16,7 +16,15 @@ import { useWindowAI } from "hooks/useWindowAI";
 const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
   const { contextMenu } = useMenu();
   const { minimize, open } = useProcesses();
-  const { aiEnabled, setAiEnabled, stackOrder } = useSession();
+  const {
+    aiEnabled,
+    clippyEnabled,
+    clippyMode,
+    setAiEnabled,
+    setClippyEnabled,
+    setClippyMode,
+    stackOrder,
+  } = useSession();
   const processesRef = useProcessesRef();
   const { fullscreenElement, toggleFullscreen } = useViewport();
   const hasWebGPU = useWebGPUCheck();
@@ -76,7 +84,29 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
                   },
                   MENU_SEPERATOR,
                 ]
-              : [])
+              : []),
+            {
+              label: "Virtual Assistant",
+              menu: [
+                {
+                  action: () => setClippyEnabled(!clippyEnabled),
+                  checked: clippyEnabled,
+                  label: "Show Clippy",
+                },
+                MENU_SEPERATOR,
+                {
+                  action: () => setClippyMode("ambient"),
+                  checked: clippyMode === "ambient",
+                  label: "Ambient Mode",
+                },
+                {
+                  action: () => setClippyMode("interactive"),
+                  checked: clippyMode === "interactive",
+                  label: "Interactive Mode",
+                },
+              ],
+            },
+            MENU_SEPERATOR
           );
         }
 
@@ -84,6 +114,8 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
       }),
     [
       aiEnabled,
+      clippyEnabled,
+      clippyMode,
       contextMenu,
       fullscreenElement,
       hasWebGPU,
@@ -93,6 +125,8 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
       open,
       processesRef,
       setAiEnabled,
+      setClippyEnabled,
+      setClippyMode,
       stackOrder,
       toggleFullscreen,
     ]

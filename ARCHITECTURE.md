@@ -229,7 +229,34 @@ Key files:
 - `components/system/Dialogs/S3Connection/` - Connection management UI
 - `hooks/useS3ConnectionLoader.ts` - Auto-mount on session load
 
-### 1.5 Session Persistence
+### 1.5 Clippy Virtual Assistant
+
+The Clippy virtual assistant provides an interactive helper using the `clippyts` library (via `@react95/clippy`).
+
+**Modes:**
+
+| Mode          | Behavior                                                         |
+| ------------- | ---------------------------------------------------------------- |
+| `ambient`     | Random animations every 30-60s, tips every 2-5 minutes           |
+| `interactive` | Responds to app opens with contextual messages, reacts to errors |
+
+**Accessing Clippy:**
+
+- Right-click taskbar → "Virtual Assistant" submenu
+- Toggle "Show Clippy" to enable/disable
+- Select mode: "Ambient Mode" or "Interactive Mode"
+
+**Key files:**
+
+- `components/system/Clippy/index.tsx` - Main component with agent loading
+- `components/system/Clippy/useAmbientMode.ts` - Random animations and tips
+- `components/system/Clippy/useInteractiveMode.ts` - App-aware responses
+- `components/system/Clippy/tips.ts` - Message content for apps
+- `components/system/Clippy/StyledClippy.ts` - Global CSS fixes for positioning
+
+**Settings persisted:** `clippyEnabled`, `clippyMode` in session.json
+
+### 1.6 Session Persistence
 
 Session data persists to `/session.json` in IndexedDB via the writable OverlayFS layer.
 
@@ -239,6 +266,8 @@ Session data persists to `/session.json` in IndexedDB via the writable OverlayFS
 type SessionData = {
   // User Preferences
   aiEnabled: boolean;
+  clippyEnabled?: boolean;
+  clippyMode?: ClippyMode; // "ambient" | "interactive"
   clockSource: ClockSource;
   cursor: string | undefined;
   lazySheep?: boolean;

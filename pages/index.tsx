@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { memo } from "react";
 import AppsLoader from "components/system/Apps/AppsLoader";
 import Desktop from "components/system/Desktop";
@@ -9,6 +10,10 @@ import useIFrameFocuser from "hooks/useIFrameFocuser";
 import useS3ConnectionLoader from "hooks/useS3ConnectionLoader";
 import useSessionAppsLoader from "hooks/useSessionAppsLoader";
 import useUrlLoader from "hooks/useUrlLoader";
+
+const Clippy = dynamic(() => import("components/system/Clippy"), {
+  ssr: false,
+});
 
 const Index = (): React.ReactElement => {
   useIFrameFocuser();
@@ -23,6 +28,7 @@ const Index = (): React.ReactElement => {
     <Desktop>
       <Taskbar />
       <AppsLoader />
+      <Clippy />
     </Desktop>
   );
 };

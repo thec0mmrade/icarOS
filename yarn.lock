@@ -2103,6 +2103,13 @@
   dependencies:
     "@xml-tools/parser" "^1.0.11"
 
+"@react95/clippy@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@react95/clippy/-/clippy-2.0.2.tgz#dc17a1dd2eba22b9d238daab89d1812af381be53"
+  integrity sha512-2JB+hMg2nx5E/rKYzxEWPZggb7pNe1wGljmnj+aSTaJf8ro9JuParb62jfx3VHSeGyygy3M3BMq6txMq9wRmtg==
+  dependencies:
+    clippyts "^1.0.4"
+
 "@redux-devtools/extension@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-3.3.0.tgz#bc775d289f15604c472112920beac2cf4dbb7907"
@@ -4331,6 +4338,11 @@ clipboardy@3.0.0:
     arch "^2.2.0"
     execa "^5.1.1"
     is-wsl "^2.2.0"
+
+clippyts@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/clippyts/-/clippyts-1.0.4.tgz#517f023dba8af4beb47a06b9b4dee64d074a8ebb"
+  integrity sha512-oo78IuzrUKzTiMjyF1t5Xh0MFrsQ7/MxG9wXYek1TPiFC2F6aNnO8ioiPwLNOw3EYHwzMAQAWwGRMWEc6Lms6g==
 
 cliui@^8.0.1:
   version "8.0.1"

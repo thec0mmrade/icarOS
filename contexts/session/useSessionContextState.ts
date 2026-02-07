@@ -10,6 +10,7 @@ import { type ApiError } from "browserfs/dist/node/core/api_error";
 import { type SortBy } from "components/system/Files/FileManager/useSortBy";
 import { useFileSystem } from "contexts/fileSystem";
 import {
+  type ClippyMode,
   type Views,
   type IconPositions,
   type RecentFiles,
@@ -61,6 +62,8 @@ const useSessionContextState = (): SessionContextState => {
   const [clockSource, setClockSource] = useState(DEFAULT_CLOCK_SOURCE);
   const [cursor, setCursor] = useState<string | undefined>();
   const [aiEnabled, setAiEnabled] = useState(false);
+  const [clippyEnabled, setClippyEnabled] = useState(false);
+  const [clippyMode, setClippyMode] = useState<ClippyMode>("ambient");
   const [lazySheep, setLazySheep] = useState(false);
   const [windowStates, setWindowStates] = useState(
     Object.create(null) as WindowStates
@@ -217,6 +220,8 @@ const useSessionContextState = (): SessionContextState => {
           SESSION_FILE,
           JSON.stringify({
             aiEnabled,
+            clippyEnabled,
+            clippyMode,
             clockSource,
             cursor,
             iconPositions,
@@ -237,6 +242,8 @@ const useSessionContextState = (): SessionContextState => {
     }
   }, [
     aiEnabled,
+    clippyEnabled,
+    clippyMode,
     clockSource,
     cursor,
     haltSession,
@@ -286,6 +293,8 @@ const useSessionContextState = (): SessionContextState => {
           if (session.clockSource) setClockSource(session.clockSource);
           if (session.cursor) setCursor(session.cursor);
           if (session.aiEnabled) setAiEnabled(session.aiEnabled);
+          if (session.clippyEnabled) setClippyEnabled(session.clippyEnabled);
+          if (session.clippyMode) setClippyMode(session.clippyMode);
           if (session.themeName) setThemeName(session.themeName);
           if (session.wallpaperImage) {
             setWallpaper(session.wallpaperImage, session.wallpaperFit);
@@ -395,6 +404,8 @@ const useSessionContextState = (): SessionContextState => {
 
   return {
     aiEnabled,
+    clippyEnabled,
+    clippyMode,
     clockSource,
     cursor,
     foregroundId,
@@ -406,6 +417,8 @@ const useSessionContextState = (): SessionContextState => {
     s3Connections,
     sessionLoaded,
     setAiEnabled,
+    setClippyEnabled,
+    setClippyMode,
     setClockSource,
     setCursor,
     setForegroundId,

@@ -32,6 +32,8 @@ export type Views = Record<string, FileManagerViewNames>;
 
 export type ClockSource = "local" | "ntp";
 
+export type ClippyMode = "ambient" | "interactive";
+
 export type RecentFiles = [string, string, string][];
 
 export type S3Connection = {
@@ -52,6 +54,8 @@ export type IconPositions = Record<string, IconPosition>;
 
 export type SessionData = {
   aiEnabled: boolean;
+  clippyEnabled?: boolean;
+  clippyMode?: ClippyMode;
   clockSource: ClockSource;
   cursor: string | undefined;
   iconPositions: IconPositions;
@@ -73,6 +77,8 @@ export type SessionContextState = SessionData & {
   removeFromStack: (id: string) => void;
   sessionLoaded: boolean;
   setAiEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setClippyEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setClippyMode: React.Dispatch<React.SetStateAction<ClippyMode>>;
   setClockSource: React.Dispatch<React.SetStateAction<ClockSource>>;
   setCursor: React.Dispatch<React.SetStateAction<string | undefined>>;
   setForegroundId: React.Dispatch<React.SetStateAction<string>>;
