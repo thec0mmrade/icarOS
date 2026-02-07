@@ -1,5 +1,11 @@
 # Credits
 
+## Creator
+
+- [Dustin Brett](https://dustinbrett.com) - Original creator of daedalOS
+
+---
+
 This project is greatly augmented by code from the open source community. Thank you to all the developers who have contributed to these projects!
 
 ## Frameworks
@@ -29,8 +35,10 @@ This project is greatly augmented by code from the open source community. Thank 
 - [3D FlowerBox](https://github.com/kevin-shannon/3D-FlowerBox)
 - [3D Maze](https://github.com/ibid-11962/Windows-95-3D-Maze-Screensaver)
 - [7z-wasm](https://github.com/use-strict/7z-wasm)
+- [@react95/clippy](https://github.com/ArtBIT/React95)
 - [ani-cursor](https://github.com/captbaritone/webamp/tree/master/packages/ani-cursor)
 - [Coastal Landscape](https://www.shadertoy.com/view/fstyD4)
+- [clippyts](https://github.com/ArtBIT/clippyts)
 - [codecbox.js](https://github.com/duanyao/codecbox.js)
 - [decode-ico](https://github.com/LinusU/decode-ico)
 - [exif-js](https://github.com/exif-js/exif-js)
@@ -70,6 +78,7 @@ This project is greatly augmented by code from the open source community. Thank 
 
 - [Boxedwine](https://github.com/danoon2/Boxedwine)
 - [emulatorjs](https://github.com/ethanaobrien/emulatorjs)
+- [hexed.it](https://hexed.it)
 - [jspaint](https://github.com/1j01/jspaint)
 - [Marked](https://github.com/markedjs/marked)
   - [DOMPurify](https://github.com/cure53/DOMPurify)
@@ -97,13 +106,25 @@ This project is greatly augmented by code from the open source community. Thank 
 
 - [ntp.js](http://www.ntpjs.org/)
 - [allOrigins](https://allorigins.win/)
+- [Amazon S3](https://aws.amazon.com/s3/)
+- [Art Institute of Chicago](https://api.artic.edu)
 - [Astronomy Picture of the Day](https://apod.nasa.gov/apod/)
 - [Cloudflare DoH](https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/make-api-requests/)
+- [CORS.lol](https://api.cors.lol)
+- [corsproxy.io](https://corsproxy.io)
 - [Google DoH](https://developers.google.com/speed/public-dns/docs/doh)
 - [isomorphic-git Cors Proxy](https://github.com/isomorphic-git/cors-proxy)
 - [IPFS Public Gateways](https://ipfs.github.io/public-gateway-checker/)
+- [Lorem Picsum](https://picsum.photos)
+- [MinIO](https://min.io)
+- [SomaFM](https://somafm.com)
+- [Storj](https://www.storj.io)
 - [The Old Net](https://theoldnet.com/)
 - [Wayback Machine](https://web.archive.org/)
 - [Wasmer Registry](https://docs.wasmer.io/registry)
 - [Winamp Skin Museum](https://skins.webamp.org/)
 - [Weather Report](https://github.com/chubin/wttr.in)
+
+## Icon Sets
+
+- [KDE Breeze Icons](https://github.com/KDE/breeze-icons) (LGPL-3.0)
