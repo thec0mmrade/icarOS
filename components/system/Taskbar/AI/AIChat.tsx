@@ -1,7 +1,7 @@
+import DOMPurify from "dompurify";
 import { useTheme } from "styled-components";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  escapeHtml,
   formatWebLlmProgress,
   responseTweaks,
   speakMessage,
@@ -31,6 +31,7 @@ import Button from "styles/common/Button";
 import {
   canvasToBuffer,
   clsx,
+  escapeHtml,
   getExtension,
   label,
   viewWidth,
@@ -94,7 +95,14 @@ const AIChat: FC<AIChatProps> = ({ toggleAI }) => {
       if (text) {
         setConversation((prevMessages) => {
           const newMessage = {
-            formattedText: responseTweaks(formattedText || text),
+            // Sanitize before this reaches dangerouslySetInnerHTML: formattedText
+            // is marked.parse() output over raw model text (prompt-injection /
+            // summarized-document controllable). Keep <think> for the UI's
+            // collapsible reasoning; everything dangerous is stripped.
+            formattedText: DOMPurify.sanitize(
+              responseTweaks(formattedText || text),
+              { ADD_TAGS: ["think"] }
+            ),
             text,
             type,
             withCanvas,

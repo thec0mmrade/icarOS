@@ -109,7 +109,7 @@ const S3Connection: FC<ComponentProcessProps> = ({ id }) => {
     };
 
     try {
-      storeS3Credentials(
+      await storeS3Credentials(
         connectionId,
         accessKeyId.trim(),
         secretAccessKey.trim()

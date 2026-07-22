@@ -10,11 +10,21 @@ export const BASE_2D_CONTEXT_OPTIONS: CanvasRenderingContext2DSettings = {
   desynchronized: true,
 };
 
+const IFRAME_SANDBOX_BASE =
+  "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
+
 export const IFRAME_CONFIG = {
   referrerPolicy: "no-referrer" as React.HTMLAttributeReferrerPolicy,
-  sandbox:
-    "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts",
+  sandbox: `${IFRAME_SANDBOX_BASE} allow-same-origin`,
 };
+
+// Sandbox for untrusted content rendered same-origin via srcdoc (e.g. arbitrary
+// local HTML files opened in the Browser app). Omitting allow-same-origin forces
+// the frame into an opaque origin, so its scripts cannot reach window.parent, the
+// virtual filesystem, or credentials in localStorage. Do NOT use this for the
+// Browser's directory-index srcdoc, which the parent must reach into to wire up
+// link handlers (that path is app-generated and requires same-origin).
+export const UNTRUSTED_IFRAME_SANDBOX = IFRAME_SANDBOX_BASE;
 
 export const DEFAULT_LOCALE = "en";
 

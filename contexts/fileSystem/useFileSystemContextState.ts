@@ -471,7 +471,7 @@ const useFileSystemContextState = (): FileSystemContextState => {
   const mountS3 = useCallback(
     async (connection: S3Connection): Promise<string> => {
       const { getS3Credentials } = await import("utils/s3/credentials");
-      const credentials = getS3Credentials(connection.id);
+      const credentials = await getS3Credentials(connection.id);
 
       if (!credentials) {
         throw new Error("S3 credentials not found");

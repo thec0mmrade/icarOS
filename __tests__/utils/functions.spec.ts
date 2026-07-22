@@ -1,4 +1,4 @@
-import { getFormattedSize, loadFiles } from "utils/functions";
+import { escapeHtml, getFormattedSize, loadFiles } from "utils/functions";
 
 describe("gets formatted size", () => {
   const formattedSizeCases: [number, string][] = [
@@ -19,6 +19,23 @@ describe("gets formatted size", () => {
 
   test.each(formattedSizeCases)("given %p render %p", (size, result) =>
     expect(getFormattedSize(size)).toBe(result)
+  );
+});
+
+describe("escapes html (search result filenames, etc.)", () => {
+  const escapeCases: [string, string][] = [
+    ["plain.txt", "plain.txt"],
+    [
+      "<img src=x onerror=alert(1)>.txt",
+      "&lt;img src=x onerror=alert(1)&gt;.txt",
+    ],
+    ["a&b.txt", "a&amp;b.txt"],
+    [`"'quotes'".txt`, "&quot;&#039;quotes&#039;&quot;.txt"],
+    ["<script>steal()</script>", "&lt;script&gt;steal()&lt;/script&gt;"],
+  ];
+
+  test.each(escapeCases)("given %p render %p", (input, result) =>
+    expect(escapeHtml(input)).toBe(result)
   );
 });
 

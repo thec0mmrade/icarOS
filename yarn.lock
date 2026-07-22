@@ -10700,7 +10700,7 @@ utf8-buffer@^1.0.0:
   resolved "https://registry.yarnpkg.com/utf8-buffer/-/utf8-buffer-1.0.0.tgz#457e7d848d4d9cd873772b710d150565f6e543d9"
   integrity sha512-ueuhzvWnp5JU5CiGSY4WdKbiN/PO2AZ/lpeLiz2l38qwdLy/cW40XobgyuIWucNyum0B33bVB0owjFCeGBSLqg==
 
-"utif@https://github.com/photopea/UTIF.js":
+"utif@https://github.com/photopea/UTIF.js#2e6be655cb1beee3b4fc193deefee35b10b3a68c":
   version "3.1.0"
   resolved "https://github.com/photopea/UTIF.js#2e6be655cb1beee3b4fc193deefee35b10b3a68c"
   dependencies:

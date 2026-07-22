@@ -340,6 +340,18 @@ const verifiedNip05Addresses: Record<string, string | number> = {};
 
 const TIMEOUT_ERRORS = new Set([408, 504]);
 
+// The nip05 field comes from a remote profile, so its domain is attacker-chosen.
+// Restrict it to a bare public hostname before fetching to prevent path/port
+// smuggling and probing of the user's own LAN/localhost.
+const PRIVATE_NIP05_HOST =
+  /^(?:localhost|0\.0\.0\.0|127\.|10\.|192\.168\.|169\.254\.|172\.(?:1[6-9]|2\d|3[01])\.|\[?::1|\[?f[cd])/i;
+
+const isPublicNip05Domain = (domain?: string): boolean =>
+  Boolean(domain) &&
+  /^[a-z0-9.-]+$/i.test(domain as string) &&
+  (domain as string).includes(".") &&
+  !PRIVATE_NIP05_HOST.test(domain as string);
+
 export const getNip05Domain = async (
   nip05address?: string,
   pubkey?: string
@@ -348,6 +360,8 @@ export const getNip05Domain = async (
 
   try {
     const [userName, domain] = nip05address.split("@");
+
+    if (!isPublicNip05Domain(domain)) return "";
 
     if (verifiedNip05Addresses[pubkey] === domain) return domain;
     if (
@@ -358,7 +372,7 @@ export const getNip05Domain = async (
     }
 
     const nostrJson = await fetch(
-      `https://${domain}${BASE_NIP05_URL}?name=${userName}`
+      `https://${domain}${BASE_NIP05_URL}?name=${encodeURIComponent(userName)}`
     );
 
     if (nostrJson.ok) {

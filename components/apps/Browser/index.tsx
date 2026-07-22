@@ -37,6 +37,7 @@ import {
   IFRAME_CONFIG,
   ONE_TIME_PASSIVE_EVENT,
   SHORTCUT_EXTENSION,
+  UNTRUSTED_IFRAME_SANDBOX,
 } from "utils/constants";
 import {
   GOOGLE_SEARCH_QUERY,
@@ -78,6 +79,9 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [loading, setLoading] = useState(false);
   const [srcDoc, setSrcDoc] = useState("");
+  // True only while srcDoc holds an arbitrary local HTML file (untrusted). The
+  // directory-index srcDoc and remote pages stay false so they keep same-origin.
+  const [isUntrustedSrcDoc, setIsUntrustedSrcDoc] = useState(false);
   const changeHistory = (step: number): void => {
     moveHistory(step);
 
@@ -97,6 +101,7 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
     }
 
     if (isSrcDoc) {
+      setIsUntrustedSrcDoc(false);
       setSrcDoc("");
       iframeRef.current?.setAttribute("src", newUrl);
     } else {
@@ -131,7 +136,10 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
           (await exists(addressInput));
 
         setLoading(true);
-        if (isHtml) setSrcDoc((await readFile(addressInput)).toString());
+        if (isHtml) {
+          setIsUntrustedSrcDoc(true);
+          setSrcDoc((await readFile(addressInput)).toString());
+        }
         setIcon(id, processDirectory.Browser.icon);
 
         if (!isHtml) {
@@ -309,6 +317,7 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
               newTitle = `Index of ${directory}`;
             }
 
+            setIsUntrustedSrcDoc(false);
             setSrcDoc(newSrcDoc);
             prependFileToTitle(newTitle);
           } else {
@@ -488,6 +497,9 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
         title={id}
         {...IFRAME_CONFIG}
         credentialless={supportsCredentialless ? "credentialless" : undefined}
+        sandbox={
+          isUntrustedSrcDoc ? UNTRUSTED_IFRAME_SANDBOX : IFRAME_CONFIG.sandbox
+        }
       />
     </StyledBrowser>
   );
