@@ -83,7 +83,7 @@
     "resedit": "^2.0.3",
     "rtf.js": "^3.0.9",
     "styled-components": "^6.1.19",
-    "utif": "https://github.com/photopea/UTIF.js",
+    "utif": "https://github.com/photopea/UTIF.js#2e6be655cb1beee3b4fc193deefee35b10b3a68c",
     "wasi-js": "^1.7.3"
   },
   "devDependencies": {

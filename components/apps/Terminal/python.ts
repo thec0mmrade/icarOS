@@ -45,7 +45,7 @@ export const runPython = async (
 
     try {
       if (code.includes("import micropip")) {
-        await window.pyodide.loadPackage("micropip", { checkIntegrity: false });
+        await window.pyodide.loadPackage("micropip", { checkIntegrity: true });
       }
 
       let result = await window.pyodide.runPythonAsync(

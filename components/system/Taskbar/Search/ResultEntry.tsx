@@ -18,7 +18,7 @@ import { type ProcessArguments } from "contexts/process/types";
 import { useSession } from "contexts/session";
 import Icon from "styles/common/Icon";
 import { DEFAULT_LOCALE, SHORTCUT_EXTENSION } from "utils/constants";
-import { getExtension, isYouTubeUrl } from "utils/functions";
+import { escapeHtml, getExtension, isYouTubeUrl } from "utils/functions";
 import { useIsVisible } from "hooks/useIsVisible";
 import SubIcons from "components/system/Files/FileEntry/SubIcons";
 
@@ -53,10 +53,13 @@ const ResultEntry: FC<ResultEntryProps> = ({
   );
   const baseName = useMemo(() => basename(url, SHORTCUT_EXTENSION), [url]);
   const name = useMemo(() => {
-    let text = baseName;
+    // Escape the filename first: it is attacker-controllable (import paths like
+    // drag-drop, extraction, and S3 sync write names verbatim) and is rendered
+    // via dangerouslySetInnerHTML below. Only the <span> highlight we add is HTML.
+    let text = escapeHtml(baseName);
 
     try {
-      const escapedTerm = searchTerm.replace(
+      const escapedTerm = escapeHtml(searchTerm).replace(
         /[.*+?^${}()|[\]\\]/g,
         String.raw`\$&`
       );

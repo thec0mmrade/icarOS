@@ -136,7 +136,22 @@ const fetchCommandFromWAPM = async ({
   if (!url) return wasmBinary;
 
   try {
-    wasmBinary = new Uint8Array(await (await fetch(url)).arrayBuffer());
+    // No cryptographic integrity is possible for arbitrary registry packages, but
+    // require HTTPS and reject document/error responses (what a repurposed domain
+    // or MITM typically serves) before this reaches WebAssembly.compile.
+    if (!/^https:\/\//i.test(url)) return new Uint8Array();
+
+    const response = await fetch(url);
+    const contentType = response.headers.get("content-type") || "";
+
+    if (
+      !response.ok ||
+      /text\/html|application\/(?:json|xml)|text\//i.test(contentType)
+    ) {
+      return new Uint8Array();
+    }
+
+    wasmBinary = new Uint8Array(await response.arrayBuffer());
   } catch {
     // Ignore failure to fetch from WAPM Repository
   }
