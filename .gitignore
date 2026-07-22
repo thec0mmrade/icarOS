@@ -44,3 +44,4 @@ public/Users/Public/**
 !public/Users/Public/Videos
 !public/Users/Public/Videos/*.mp4
 *.tsbuildinfo
+public/vercel.json
