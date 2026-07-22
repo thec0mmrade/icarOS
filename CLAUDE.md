@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 icarOS is a browser-based desktop environment built with React/Next.js. It emulates a full operating system experience including window management, file system, taskbar, start menu, and 20+ applications.
 
+The build is a **static export** (`output: "export"` in `next.config.js`) — everything runs client-side. There are no API routes or server-side rendering; do not add code that depends on a Node.js server at runtime.
+
 ## Development Commands
 
 ```bash
@@ -17,12 +19,15 @@ yarn build:prebuild          # Required before first dev run
 yarn dev                     # Start dev server on localhost:3000
 
 # Production
-yarn build                   # Full production build
-yarn serve                   # Serve production build
+yarn build                   # Full production build (static export to out/)
+yarn serve                   # Serve production build from out/
 
 # Testing
 yarn test                    # Run Jest unit tests
-yarn e2e                     # Run Playwright E2E tests
+yarn test path/to/file.spec.ts        # Run a single unit test file
+yarn test -t "test name"              # Run tests matching a name
+yarn e2e                     # Run Playwright E2E tests (starts its own dev server)
+yarn e2e --project=chromium e2e/index.spec.ts   # Single E2E file, one browser
 yarn e2e:ui                  # E2E tests with UI
 
 # Code Quality
@@ -97,10 +102,11 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md#2-application-development-guide) for det
 ## Code Style Requirements
 
 - **TypeScript strict mode** enabled
-- **No relative imports** - use absolute paths from baseUrl
+- **No relative imports** - use absolute paths from baseUrl (ESLint-enforced)
+- **Alphabetical object keys** - `sort-keys-fix` and `typescript-sort-keys` ESLint rules require sorted keys in object literals and type/interface members
 - **Alphabetical CSS property ordering** in styled-components
 - **No implicit any** - explicit types required
-- Pre-commit hooks run Prettier, ESLint, and Stylelint on staged files
+- Pre-commit hooks (husky + lint-staged) run Prettier, ESLint `--fix`, and Stylelint `--fix` on staged files
 
 ## Testing
 
