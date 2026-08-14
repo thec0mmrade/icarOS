@@ -1,8 +1,9 @@
 name: Tests
 
 on:
-  push:
-    branches: [main]
+  # push trigger disabled for now — the full 3-browser suite consistently
+  # blows the 60-minute budget. Run manually via workflow_dispatch until
+  # this is fixed (see TODO.md).
   workflow_dispatch:
     inputs:
       project:
@@ -38,7 +39,6 @@ jobs:
         env:
           NODE_OPTIONS: --openssl-legacy-provider
       - name: Run Jest Unit Tests
-        if: github.event_name != 'workflow_dispatch'
         run: yarn test
       - name: Build App
         run: yarn build
