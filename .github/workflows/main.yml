@@ -3,6 +3,26 @@ name: Tests
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      project:
+        description: "Browser project to run (chromium, firefox, webkit, or all)"
+        required: true
+        default: webkit
+        type: choice
+        options:
+          - all
+          - chromium
+          - firefox
+          - webkit
+      spec:
+        description: "E2E spec file/dir to run (blank = all specs)"
+        required: false
+        default: e2e/components/apps/Terminal.spec.ts
+      retries:
+        description: "Retries per test (0 for fast, unmasked failures)"
+        required: true
+        default: "0"
 
 jobs:
   tests:
@@ -18,13 +38,31 @@ jobs:
         env:
           NODE_OPTIONS: --openssl-legacy-provider
       - name: Run Jest Unit Tests
+        if: github.event_name != 'workflow_dispatch'
         run: yarn test
       - name: Build App
         run: yarn build
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
       - name: Run Playwright E2E Tests
-        run: yarn e2e
+        env:
+          DISPATCH_PROJECT: ${{ inputs.project }}
+          DISPATCH_RETRIES: ${{ inputs.retries }}
+          DISPATCH_SPEC: ${{ inputs.spec }}
+          IS_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          if [ "$IS_DISPATCH" = "true" ]; then
+            args=(--retries="$DISPATCH_RETRIES")
+            if [ "$DISPATCH_PROJECT" != "all" ]; then
+              args+=(--project="$DISPATCH_PROJECT")
+            fi
+            if [ -n "$DISPATCH_SPEC" ]; then
+              args+=("$DISPATCH_SPEC")
+            fi
+            yarn e2e "${args[@]}"
+          else
+            yarn e2e
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

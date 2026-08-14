@@ -6,9 +6,6 @@ Development tasks, from near-term to exploratory feature plans.
 
 ## Next Up
 
-- [ ] Redeploy to Vercel to pick up the security header fixes committed at
-      `31fc0213` (live site was not yet redeployed as of the last check)
-
 ## Backlog
 
 ### WebTop Variant
@@ -57,3 +54,5 @@ Development tasks, from near-term to exploratory feature plans.
 
 - [x] Fix security findings from SECURITY_REVIEW.md (`1dd67da6`)
 - [x] Serve security headers on static-export deploys (Vercel) (`31fc0213`)
+- [x] Redeploy to Vercel to make security header fixes live (deployed
+      2026-08-14, `dpl_CS6ppA8orc4g62VFY3qfD5xCvEDN`, commit `fa5dccbf`)
