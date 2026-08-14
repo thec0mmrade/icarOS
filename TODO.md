@@ -6,6 +6,12 @@ Development tasks, from near-term to exploratory feature plans.
 
 ## Next Up
 
+- [ ] Re-enable the `Tests` workflow's `push` trigger (`.github/workflows/main.yml`)
+      once the full 3-browser E2E suite reliably finishes within the
+      60-minute job budget — disabled 2026-08-14 (`8b5e0d58`) because even
+      after quarantining the WebKit Terminal failures it still hadn't
+      finished at 35+ minutes. Until then, run it manually via
+      `workflow_dispatch`.
 - [ ] Root-cause why Terminal's file-system-access E2E tests never render
       their prompt on WebKit (`e2e/components/apps/Terminal.spec.ts`,
       quarantined via `TERMINAL_FILE_SYSTEM_ACCESS_NOT_SUPPORTED_BROWSERS` in
