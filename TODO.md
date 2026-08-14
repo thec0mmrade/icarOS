@@ -6,6 +6,17 @@ Development tasks, from near-term to exploratory feature plans.
 
 ## Next Up
 
+- [ ] Root-cause why Terminal's file-system-access E2E tests never render
+      their prompt on WebKit (`e2e/components/apps/Terminal.spec.ts`,
+      quarantined via `TERMINAL_FILE_SYSTEM_ACCESS_NOT_SUPPORTED_BROWSERS` in
+      `e2e/constants.ts`) — window opens fine, but `useTerminal.ts`'s
+      `loadFiles(libs)` → `window.Terminal` chain never completes in time;
+      needs a real WebKit runtime to debug (this sandbox's NixOS host is
+      missing the shared libs Playwright's WebKit build needs). Use the
+      `Tests` workflow's `workflow_dispatch` trigger (`project: webkit`,
+      default spec) to reproduce with `retries: 0` and pull the
+      `playwright-report` artifact for a trace.
+
 ## Backlog
 
 ### WebTop Variant
