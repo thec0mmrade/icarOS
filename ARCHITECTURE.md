@@ -736,7 +736,7 @@ While `utils/constants.ts` centralizes many values, some magic strings remain sc
 - Path constructions
 - CSS values
 
-### 4.3 Missing Features (from IDEAS.md)
+### 4.3 Missing Features (from TODO.md)
 
 **High Priority:**
 
