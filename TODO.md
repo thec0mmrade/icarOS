@@ -27,7 +27,7 @@ Development tasks, from near-term to exploratory feature plans.
 
 ### WebTop Variant
 
-- [ ] SSH Client
+- [ ] SSH Client (see Terminal Enhancements below — needs an external relay)
 - [ ] Progressive Web App
   - [ ] Offline support ([next-offline](https://github.com/hanford/next-offline))
   - [ ] Service Worker firewall ([Mock Service Worker](https://github.com/mswjs/msw))
@@ -65,7 +65,12 @@ Development tasks, from near-term to exploratory feature plans.
 
 ### Terminal Enhancements
 
-- [ ] SSH ([SSHy](https://github.com/stuicey/SSHy) or [ssheasy](https://github.com/hullarb/ssheasy))
+- [ ] SSH ([SSHy](https://github.com/stuicey/SSHy), [ssheasy](https://github.com/hullarb/ssheasy),
+      or Google's WASM-compiled OpenSSH port from ChromeOS's Secure
+      Shell/`hterm`+`nassh`) — browsers can't open raw TCP sockets, so any
+      of these need an external WebSocket↔TCP relay server the user points
+      at (same pattern as the S3 connection dialog or Browser's CORS proxy
+      options); it can't be a zero-config, fully static feature
 
 ## Done
 
